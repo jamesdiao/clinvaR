@@ -1,0 +1,8 @@
+library('devtools')
+library('roxygen2')
+setwd('/Users/jamesdiao/Documents/Kohane_Lab/clinvar-pkg')
+#create('clinvaR')
+setwd('clinvaR')
+document()
+setwd('..')
+install('clinvaR')
