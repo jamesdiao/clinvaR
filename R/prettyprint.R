@@ -4,7 +4,9 @@
 #' @usage prettyprint(values, title = NULL, sd = TRUE, ylimit = NULL, xlabel = "Population", ylabel = NULL)
 #' @examples prettyprint(values, title = title, sd = F, ylimit = NULL, 
 #' xlabel = "Population", ylabel = "Fraction with at least 1 non-reference site")
+#' @export
 #' 
+
 prettyprint <- function(values, sd, title, xlabel, ylabel, ylimit) {
   if (missing(sd)) sd <- TRUE
   if (missing(title)) title <- NULL

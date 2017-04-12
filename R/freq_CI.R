@@ -3,6 +3,7 @@
 #' This function computes a one-Tailed Beta distribution confidence interval from observed alleles
 #' @usage freq_CI(freq, n, cutoff)
 #' @examples freq_CI(freq = 0.05, n = 2*sample_size, cutoff = 0.95)
+#' @export
 
 freq_CI <- function(freq, n, cutoff) {
   obs_success = freq * n

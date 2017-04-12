@@ -6,6 +6,7 @@
 #' @usage aggregateCalc(input, superpop, item, dataset, loc, inherit)
 #' @examples aggregateCalc(input = merged_1000g, superpop = 'AFR', item = 'BRCA2', 
 #' dataset = '1000 Genomes', loc = rep(T, nrow(merged_1000g)), inherit.use = inheritance.gene))
+#' @export
 
 aggregateCalc <- function(input, superpop, item, dataset, loc, inherit) {
   find = sprintf("AF_%s",toupper(dataset))

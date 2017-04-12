@@ -6,6 +6,7 @@
 #' @usage aggregateCount(input, superpop, item, dataset, loc, inherit)
 #' @examples aggregateCount(input = merged_1000g, superpop = 'AFR', item = 'BRCA2', 
 #' dataset = '1000 Genomes', loc = rep(T, nrow(merged_1000g)), inherit.use = inheritance.gene))
+#' @export
 
 aggregateCount <- function(input, superpop, item, dataset, loc, inherit) {
   # Aggregation by counting

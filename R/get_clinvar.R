@@ -14,6 +14,7 @@
 #' # find the file name
 #' clinvar <- get_clinvar(clinvar_file)
 #' clinvar <- clinvar[!duplicated(clinvar$VAR_ID),] # remove duplicates
+#' @export
 
 get_clinvar <- function(clinvar_file) {
   file.by.line <- readLines(clinvar_file)

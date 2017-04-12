@@ -5,6 +5,7 @@
 #' @usage download_1000g(gene, download)
 #' @examples download_1000g('BRCA2', download = T)
 #' download_output <- sapply(ACMG.panel, function(gene) download_1000g(gene, download = T)) %>% t
+#' @export
 
 
 download_1000g <- function(gene, download) {

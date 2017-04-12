@@ -4,6 +4,7 @@
 #' returns an ancestry-stratified plot of allele frequencies
 #' @usage var_plot_1000g(pathogenic, frac)
 #' @examples var_plot_1000g(pathogenic = T, frac = T)
+#' @export
 
 var_plot_1000g <- function(pathogenic, frac) {
   if (pathogenic){

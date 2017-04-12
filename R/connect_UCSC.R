@@ -2,6 +2,7 @@
 #'
 #' This function makes a connection to the hg19 genome database and defines a query function. 
 #' @usage connect_UCSC
+#' @export
 
 connect_UCSC <- function() {
   for (con in dbListConnections(MySQL())) dbDisconnect(con)

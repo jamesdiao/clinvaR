@@ -12,5 +12,4 @@ Barplot of ancestry-stratified values
 \examples{
 prettyprint(values, title = title, sd = F, ylimit = NULL, 
 xlabel = "Population", ylabel = "Fraction with at least 1 non-reference site")
-
 }
