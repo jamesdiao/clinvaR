@@ -6,9 +6,10 @@
 #' @examples var_plot_1000g(pathogenic = T, frac = T)
 #' @export
 
-var_plot_1000g <- function(pathogenic, frac) {
+var_plot_1000g <- function(clinvar, ACMG.1000g, pathogenic, frac) {
+  merged_1000g <- merge_clinvar_1000g(clinvar, ACMG.1000g)
   if (pathogenic){
-    KP <- sapply(merged_1000g$CLNSIG, function(x) 5 %in% x) 
+    KP <- sapply(merged_1000g$CLNSIG, function(x) 5 %in% x)
     KP_only <- c("RET","PRKAG2","MYH7","TNNI3","TPM1","MYL3","CACNA1S",
                  "DSP","MYL2","APOB","PCSK9","RYR1","RYR2","SDHAF2","ACTC1")
     ACMG.data <- merged_1000g[!((merged_1000g$GENE %in% KP_only) & (!KP)),]

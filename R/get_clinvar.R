@@ -3,8 +3,12 @@
 #' This function allows you to read a ClinVar VCF 
 #' into a table and extract important information
 #' from the INFO section. 
-#' @usage get_clinvar(clinvar_file)
-#' @param clinvar_file Specifies the path to the VCF. 
+#' 
+#' @usage get_clinvar()
+#' get_clinvar(file)
+#' @param file Specifies the path to the VCF. 
+#' @details getclinvar() collects the latest VCF from 'ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz'
+#' Specifying a file path will collect the VCF from that path instead. 
 #' @examples 
 #' clinvar_date <- system("ls ClinVar_Reports/VCF/clinvar*.vcf.gz", intern = T) %>% 
 #' strsplit("clinvar_") %>% sapply("[[",2) %>% unlist %>% 
@@ -16,10 +20,19 @@
 #' clinvar <- clinvar[!duplicated(clinvar$VAR_ID),] # remove duplicates
 #' @export
 
-get_clinvar <- function(clinvar_file) {
-  file.by.line <- readLines(clinvar_file)
+get_clinvar <- function(file) {
+  if (missing(file)) {
+    dir <- system.file("extdata", "Supplementary_Files/", package = "clinvaR")
+    file <- sprintf("%sclinvar_%s.vcf.gz", dir, Sys.Date())
+    download.file(url = "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz", 
+                  destfile = file, method = "internal")
+    system(sprintf("gunzip %s", file))
+    file <- sprintf("%sclinvar_%s.vcf", dir, Sys.Date())
+  }
+  
+  file.by.line <- readLines(file)
   #file_date <- as.Date(strsplit(file.by.line[2],"=")[[1]][2], "%Y%m%d")
-  #system(sprintf("mv %s ClinVar_Reports/clinvar_%s.vcf", clinvar_file, file_date))
+  #system(sprintf("mv %s ClinVar_Reports/clinvar_%s.vcf", file, file_date))
   clean.lines <- file.by.line[!grepl("##.*", file.by.line)] #Remove ## comments
   clean.lines[1] <- sub('.', '', clean.lines[1]) #Remove # from header
   input <- read.table(text = paste(clean.lines, collapse = "\n"), header = T, stringsAsFactors = F, 

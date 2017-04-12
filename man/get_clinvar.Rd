@@ -4,15 +4,20 @@
 \alias{get_clinvar}
 \title{Import ClinVar VCF}
 \usage{
-get_clinvar(clinvar_file)
+get_clinvar()
+get_clinvar(file)
 }
 \arguments{
-\item{clinvar_file}{Specifies the path to the VCF.}
+\item{file}{Specifies the path to the VCF.}
 }
 \description{
 This function allows you to read a ClinVar VCF 
 into a table and extract important information
 from the INFO section.
+}
+\details{
+getclinvar() collects the latest VCF from 'ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz'
+Specifying a file path will collect the VCF from that path instead.
 }
 \examples{
 clinvar_date <- system("ls ClinVar_Reports/VCF/clinvar*.vcf.gz", intern = T) \%>\% 

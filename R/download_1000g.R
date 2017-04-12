@@ -12,6 +12,7 @@ download_1000g <- function(gene, download) {
   if (missing(download)) {
     download <- TRUE
   }
+  query <- connect_UCSC()
   #for tracking: #gene %>% paste(which(ACMG.panel==gene)) %>% paste(length(ACMG.panel), sep = "/") %>% print
   success <- FALSE
   refGene <- sprintf("select * from refGene where name2 = \"%s\" limit 20", gene) %>% query

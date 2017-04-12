@@ -69,7 +69,7 @@ import_file_exac <- function(gene, dataset) {
 #' }
 #' #ACMG.1000g[duplicated(ACMG.1000g$VAR_ID),1:8] # Display and remove duplicates
 #' ACMG.1000g <- ACMG.1000g[!duplicated(ACMG.1000g$VAR_ID),]
-#' @export
+#' #@export
 
 import_file_1000g <- function(gene) {
   map <- system.file("extdata", "Supplementary_Files/phase3map.txt", package = "clinvaR") %>% 

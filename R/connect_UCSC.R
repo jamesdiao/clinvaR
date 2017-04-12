@@ -10,4 +10,5 @@ connect_UCSC <- function() {
                    dbname = 'hg19', host = 'genome-mysql.cse.ucsc.edu',
                    unix.sock = "/Applications/MAMP/tmp/mysql/mysql.sock")
   query <- function (input) { suppressWarnings(dbGetQuery(con, input)) }
+  return(query)
 }

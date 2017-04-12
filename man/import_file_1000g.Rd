@@ -18,4 +18,5 @@ ACMG.1000g <- rbind(ACMG.1000g,import_file_1000g(gene))
 }
 #ACMG.1000g[duplicated(ACMG.1000g$VAR_ID),1:8] # Display and remove duplicates
 ACMG.1000g <- ACMG.1000g[!duplicated(ACMG.1000g$VAR_ID),]
+#@export
 }
