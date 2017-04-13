@@ -1,16 +1,28 @@
 #' Compute and Plot Ancestry-Stratified Max/Median Penetrance by ACMG Condition
 #'
-#' @usage ancestry_penetrance(ah_low, ah_high, dataset, range, position, af_type)
+#' This function uses prevalence and allele frequency data to compute point and range 
+#' estimates for penetrance. These are used to generate three plots: 
+#' (1) Radar Plot; (2) Faceted Bar Plot; (3) Heat Map.
+#' The function returns the computed table of penetrance values (disease-conditions by superpopulations). 
+#'
+#' @usage ancestry_penetrance(ah_low, ah_high, dataset, position, alleleFreq)
 #' @examples ancestry_pen <- ancestry_penetrance(ah_low = 0.01, ah_high = 1, dataset = "gnomAD", 
-#' range = 5, position = "Max", af_type = "gene")
+#' position = "Max", alleleFreq = freq_gnomad.calc.gene)
 #' @export
 
-ancestry_penetrance <- function(ah_low, ah_high, dataset, range, position, af_type) {
+ancestry_penetrance <- function(ah_low, ah_high, dataset, position, alleleFreq) {
+  super.levels <- c("AFR", "AMR", "EAS", "EUR", "SAS")
+  ACMG_Lit_Full <- system.file("extdata", "Supplementary_Files/Literature_Prevalence_Estimates.csv", package = "clinvaR") %>% 
+    read.csv(header = TRUE, stringsAsFactors = F, na.strings = "\\N") 
+  ACMG_Lit <- ACMG_Lit_Full %>% filter(Evaluate)
+  abbrev <- ACMG_Lit$Short_Name
+  acmg_ah <- ACMG_Lit$Case_Allele_Frequency %>% as.numeric
+  
   pos <- replace(c(F,F,F,F,F), ifelse(position == "Max", 5, 3), T)
   sapply(c("Total",super.levels), function(superpop){
     # Map of disease name to disease tags
     find <- paste0("AF_", toupper(dataset))
-    named.freqs <- eval(parse(text=sprintf("freq_%s.calc.%s", tolower(dataset), af_type)))[ACMG_Lit_Full$Evaluate,]
+    named.freqs <- alleleFreq[ACMG_Lit_Full$Evaluate,]
     if (superpop != "Total") 
       find <- paste(find, superpop, sep = "_")
     named.freqs <- named.freqs[,find] %>% unlist %>% setNames(abbrev)

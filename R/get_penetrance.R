@@ -1,18 +1,29 @@
 #' Compute and Plot Penetrance Ranges by ACMG Condition
 #'
 #' @usage get_penetrance(ah_low, ah_high, dataset)
-#' @examples pen_gnomad <- get_penetrance(ah_low = 0.01, ah_high = 1, dataset = "gnomAD")
-#' pen_1000g <-  get_penetrance(ah_low = 0.01, ah_high = 1, dataset = "1000 Genomes")
+#' @examples pen_gnomad <- get_penetrance(ah_low = 0.01, ah_high = 1, 
+#' dataset = "gnomAD", alleleFreq = freq_gnomad.calc.gene)
+#' pen_1000g <-  get_penetrance(ah_low = 0.01, ah_high = 1, 
+#' dataset = "1000 Genomes", freq_1000g.count.gene)
 #' @export
 
-get_penetrance <- function(ah_low, ah_high, dataset) {
+get_penetrance <- function(ah_low, ah_high, dataset, alleleFreq) {
   # Map of disease name to disease tags
-  if (dataset == "1000 Genomes")
-    named.freqs <- allele.freq$COUNT_1000G %>% setNames(abbrev)
-  if (dataset == "gnomAD")
-    named.freqs <- allele.freq$CALC_GNOMAD %>% setNames(abbrev)
-  if (dataset == "ExAC")
-    named.freqs <- allele.freq$CALC_EXAC %>% setNames(abbrev)
+  ACMG_Lit_Full <- system.file("extdata", "Supplementary_Files/Literature_Prevalence_Estimates.csv", package = "clinvaR") %>% 
+    read.csv(header = TRUE, stringsAsFactors = F, na.strings = "\\N") 
+  ACMG_Lit <- ACMG_Lit_Full %>% filter(Evaluate)
+  abbrev <- ACMG_Lit$Short_Name
+  if (nrow(alleleFreq)==nrow(ACMG_Lit_Full))
+    alleleFreq <- alleleFreq[ACMG_Lit_Full$Evaluate,]
+  inv.prev <- ACMG_Lit$Inverse_Prevalence %>% as.numeric %>% setNames(abbrev)
+  acmg_ah <- ACMG_Lit$Case_Allele_Frequency %>% as.numeric
+  
+  if (toupper(dataset) == "1000 GENOMES")
+    named.freqs <- alleleFreq$AF_1000G %>% setNames(abbrev)
+  if (toupper(dataset) == "GNOMAD")
+    named.freqs <- alleleFreq$AF_GNOMAD %>% setNames(abbrev)
+  if (toupper(dataset) == "EXAC")
+    named.freqs <- alleleFreq$AF_EXAC %>% setNames(abbrev)
   named.prev <- 1/inv.prev %>% setNames(abbrev)
   # Repeats allow for correct quartile calculations
   #point estimate set to arithmetic mean

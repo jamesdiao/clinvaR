@@ -3,12 +3,13 @@
 #' This function computes an aggregated allele frequency: P(any pathogenic allele) across 
 #' a given dataset, at the given locations, with the given inheritance patterns, across
 #' ancestral groups. 
-#' @usage aggregateCount(input, superpop, item, dataset, loc, inherit)
-#' @examples aggregateCount(input = merged_1000g, superpop = 'AFR', item = 'BRCA2', 
-#' dataset = '1000 Genomes', loc = rep(T, nrow(merged_1000g)), inherit.use = inheritance.gene))
+#' 
+#' @usage aggregateCount(input, superpop, item, dataset, loc, inherit, sample_size)
+#' @examples aggregateCount(input = merged_1000g, superpop = 'AFR', item = 'BRCA2', dataset = '1000 Genomes', 
+#' loc = rep(T, nrow(merged_1000g)), inherit.use = inheritance.gene, sample_size = sample_size)
 #' @export
 
-aggregateCount <- function(input, superpop, item, dataset, loc, inherit) {
+aggregateCount <- function(input, superpop, item, dataset, loc, inherit, sample_size) {
   # Aggregation by counting
   front_cols <- 1:(grep("HG00096",colnames(input))-1)
   find <- (1:ncol(input))[-front_cols]

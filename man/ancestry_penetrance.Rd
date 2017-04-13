@@ -4,12 +4,15 @@
 \alias{ancestry_penetrance}
 \title{Compute and Plot Ancestry-Stratified Max/Median Penetrance by ACMG Condition}
 \usage{
-ancestry_penetrance(ah_low, ah_high, dataset, range, position, af_type)
+ancestry_penetrance(ah_low, ah_high, dataset, position, alleleFreq)
 }
 \description{
-Compute and Plot Ancestry-Stratified Max/Median Penetrance by ACMG Condition
+This function uses prevalence and allele frequency data to compute point and range 
+estimates for penetrance. These are used to generate three plots: 
+(1) Radar Plot; (2) Faceted Bar Plot; (3) Heat Map.
+The function returns the computed table of penetrance values (disease-conditions by superpopulations).
 }
 \examples{
 ancestry_pen <- ancestry_penetrance(ah_low = 0.01, ah_high = 1, dataset = "gnomAD", 
-range = 5, position = "Max", af_type = "gene")
+position = "Max", alleleFreq = freq_gnomad.calc.gene)
 }

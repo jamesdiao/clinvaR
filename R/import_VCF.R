@@ -15,10 +15,14 @@
 #' ACMG.gnomad <- ACMG.gnomad[!duplicated(ACMG.gnomad$VAR_ID),]
 #' @export
 
-import_file_exac <- function(gene, dataset) {
+import_file_exac <- function(gene, dataset, path) {
   dir <- system.file("extdata", "", package = "clinvaR")
-  file_name <- sprintf("%s%s/%s_%s.csv", dir, dataset, dataset, gene)
-  output <- read.csv(file_name, stringsAsFactors = FALSE)
+  if (missing(path)) {
+    output <- sprintf("%s%s/%s_%s.csv", dir, dataset, dataset, gene) %>% 
+      read.csv(stringsAsFactors = FALSE)
+  } else {
+    output <- read.csv(path, stringsAsFactors = FALSE)
+  }
   output$Number.of.Hemizygotes <- NULL #Inconsistently present column; removal allows row aggregation
   # Correcting for some alternate naming conventions
   if ("Conseq." %in% colnames(output))
@@ -71,7 +75,13 @@ import_file_exac <- function(gene, dataset) {
 #' ACMG.1000g <- ACMG.1000g[!duplicated(ACMG.1000g$VAR_ID),]
 #' #@export
 
-import_file_1000g <- function(gene) {
+import_file_1000g <- function(gene, path) {
+  if (missing(path)) {
+    output <- sprintf("%s%s/%s_%s.csv", dir, dataset, dataset, gene) %>% 
+      read.csv(stringsAsFactors = FALSE)
+  } else {
+    output <- read.csv(path, stringsAsFactors = FALSE)
+  }
   map <- system.file("extdata", "Supplementary_Files/phase3map.txt", package = "clinvaR") %>% 
     read.table(stringsAsFactors = F, header = T) %>% as.data.frame
   header <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", 

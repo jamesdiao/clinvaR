@@ -7,6 +7,9 @@
 #' @export
 
 merge_clinvar_1000g <- function(clinvar, ACMG.1000g) {
+  if (missing(clinvar)) {
+    clinvar <- get_test_clinvar()
+  }
   if (missing(ACMG.1000g)) {
     system.file("extdata", "Supplementary_Files/ACMG_1000G.rds", package = "clinvaR") %>% 
       readRDS -> ACMG.1000g
@@ -28,10 +31,13 @@ merge_clinvar_1000g <- function(clinvar, ACMG.1000g) {
 #' @usage merge_clinvar_exac(clinvar, ACMG.1000g)
 #' @examples merge_clinvar_exac(clinvar, ACMG.1000g)
 #' @export
-# ADD ACMG_EXAC.rds
+
 merge_clinvar_exac <- function(clinvar, ACMG.exac) {
+  if (missing(clinvar)) {
+    clinvar <- get_test_clinvar()
+  }
   if (missing(ACMG.exac)) {
-    system.file("extdata", "Supplementary_Files/ACMG_1000G.rds", package = "clinvaR") %>% 
+    system.file("extdata", "Supplementary_Files/ACMG_EXAC.rds", package = "clinvaR") %>% 
       readRDS -> ACMG.exac
   }
   inter <- intersect(clinvar$VAR_ID[clinvar$INTERP], ACMG.exac$VAR_ID)
@@ -52,7 +58,14 @@ merge_clinvar_exac <- function(clinvar, ACMG.exac) {
 #' @examples merge_clinvar_gnomad(clinvar, ACMG.1000g)
 #' @export
 
-merge_clinvar_gnomad <- function() {
+merge_clinvar_gnomad <- function(clinvar, ACMG.gnomad) {
+  if (missing(clinvar)) {
+    clinvar <- get_test_clinvar()
+  }
+  if (missing(ACMG.gnomad)) {
+    system.file("extdata", "Supplementary_Files/ACMG_GNOMAD.rds", package = "clinvaR") %>% 
+      readRDS -> ACMG.gnomad
+  }
   inter <- intersect(clinvar$VAR_ID[clinvar$INTERP], ACMG.gnomad$VAR_ID)
   merged_gnomad <- cbind(clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID), 
                          ACMG.gnomad %>% select(VAR_ID, contains("AF_"), GENE) %>% 

@@ -107,3 +107,20 @@ get_clinvar <- function(file) {
   input$INTERP <- sapply(input$CLNSIG, function(x) any(x %in% c(4,5)) & !(any(x %in% c(2,3)))) 
   input
 }
+
+#' Import Test ClinVar VCF
+#'
+#' This function imports the binary ClinVar VCF from April 4, 2017. 
+#' 
+#' @usage get_test_clinvar() 
+#' @details get_test_clinvar() imports a binary ClinVar VCF for testing purposes. 
+#' @export
+
+get_test_clinvar <- function() {
+  system.file("extdata", "Supplementary_Files/clinvar_test.rds", package = "clinvaR") %>% 
+    readRDS %>% return
+}
+  
+  
+  
+  

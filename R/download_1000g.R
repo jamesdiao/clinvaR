@@ -5,7 +5,6 @@
 #' @usage download_1000g(gene, download)
 #' @examples download_1000g('BRCA2', download = T)
 #' download_output <- sapply(ACMG.panel, function(gene) download_1000g(gene, download = T)) %>% t
-#' @export
 
 
 download_1000g <- function(gene, download) {
@@ -28,13 +27,20 @@ download_1000g <- function(gene, download) {
       # different version for chromosomes X and Y
       version <- switch(chrom.num, "X" = "shapeit2_mvncall_integrated_v1b",
                         "Y" = "integrated_v2a", "shapeit2_mvncall_integrated_v5a")
+      dir <- system.file("extdata", "1000G/", package = "clinvaR")
       command <- paste("tabix -h ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.%s.",
-                       "phase3_%s.20130502.genotypes.vcf.gz %s:%s-%s > %s_genotypes.vcf", sep = "")
-      sprintf(command, UCSC$chrom, version, chrom.num, UCSC$start, UCSC$end, gene) %>% system
-      Sys.sleep(2)
+                       "phase3_%s.20130502.genotypes.vcf.gz %s:%s-%s > %s%s_genotypes.vcf", sep = "")
+      sprintf(command, UCSC$chrom, version, chrom.num, UCSC$start, UCSC$end, dir, gene) %>% system
+      #url <- paste0("ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.%s.",
+      #              "phase3_%s.20130502.genotypes.vcf.gz")
+      #dir <- system.file("extdata", "1000G/", package = "clinvaR")
+      #sprintf(url, UCSC$chrom, version, chrom.num, UCSC$start, UCSC$end, gene) %>% 
+      #  download.file(destfile = sprintf('%s%s_genotypes.vcf', dir, gene), method = "internal")
       # Checks whether the file exists and has non-zero size
-      exists <- grepl(paste(gene,"_genotypes.vcf",sep =""), system("ls", intern = T)) %>% sum > 0
-      file.size <- strsplit(paste("stat ","_genotypes.vcf", sep = gene) %>% 
+      exists <- grepl(paste0(gene,"_genotypes.vcf"), 
+                      system(sprintf("ls %s", dir), intern = T)
+                      ) %>% any
+      file.size <- strsplit(sprintf("stat %s%s_genotypes.vcf", dir, gene) %>% 
                               system(intern = T), " ")[[1]][8]
       success <- exists & file.size > 0
     }

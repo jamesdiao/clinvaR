@@ -4,7 +4,7 @@
 \alias{aggregateCount}
 \title{Aggregate Allele Frequencies by Counting in 1000 Genomes}
 \usage{
-aggregateCount(input, superpop, item, dataset, loc, inherit)
+aggregateCount(input, superpop, item, dataset, loc, inherit, sample_size)
 }
 \description{
 This function computes an aggregated allele frequency: P(any pathogenic allele) across 
@@ -12,6 +12,6 @@ a given dataset, at the given locations, with the given inheritance patterns, ac
 ancestral groups.
 }
 \examples{
-aggregateCount(input = merged_1000g, superpop = 'AFR', item = 'BRCA2', 
-dataset = '1000 Genomes', loc = rep(T, nrow(merged_1000g)), inherit.use = inheritance.gene))
+aggregateCount(input = merged_1000g, superpop = 'AFR', item = 'BRCA2', dataset = '1000 Genomes', 
+loc = rep(T, nrow(merged_1000g)), inherit.use = inheritance.gene, sample_size = sample_size)
 }

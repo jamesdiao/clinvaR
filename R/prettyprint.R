@@ -8,6 +8,14 @@
 #' 
 
 prettyprint <- function(values, sd, title, xlabel, ylabel, ylimit) {
+  pop.levels <- c("ACB", "ASW", "ESN", "GWD", "LWK", "MSL", "YRI", "CLM", "MXL", 
+                  "PEL", "PUR", "CDX", "CHB", "CHS", "JPT", "KHV", "CEU", "FIN", 
+                  "GBR", "IBS", "TSI", "BEB", "GIH", "ITU", "PJL", "STU")
+  super <- c("AFR", "AFR", "AFR", "AFR", "AFR", "AFR", "AFR", "AMR", "AMR", 
+             "AMR", "AMR", "EAS", "EAS", "EAS", "EAS", "EAS", "EUR", "EUR", 
+             "EUR", "EUR", "EUR", "SAS", "SAS", "SAS", "SAS", "SAS") %>% setNames(pop.levels)
+  super.levels <- unique(super)
+  
   if (missing(sd)) sd <- TRUE
   if (missing(title)) title <- NULL
   if (missing(xlabel)) xlabel <- "Population"
@@ -17,7 +25,7 @@ prettyprint <- function(values, sd, title, xlabel, ylabel, ylimit) {
   values$Population <- factor(pop.levels, levels = pop.levels)
   values$Superpopulation <- factor(super[pop.levels], levels = super.levels)
   
-  plot.pop <- ggplot(values, aes(x=Population, y=Mean, fill = Superpopulation)) +
+  plot.pop <- ggplot(values, aes(x=values$Population, y=Mean, fill = values$Superpopulation)) +
     geom_bar(stat = "identity") + ggtitle(title) + xlab(xlabel) + ylab(ylabel) +
     theme_minimal() + theme(axis.text.x = element_text(angle = -45, hjust = 0.4))
   if (sd) {

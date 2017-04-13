@@ -10,6 +10,8 @@ get_penetrance(ah_low, ah_high, dataset)
 Compute and Plot Penetrance Ranges by ACMG Condition
 }
 \examples{
-pen_gnomad <- get_penetrance(ah_low = 0.01, ah_high = 1, dataset = "gnomAD")
-pen_1000g <-  get_penetrance(ah_low = 0.01, ah_high = 1, dataset = "1000 Genomes")
+pen_gnomad <- get_penetrance(ah_low = 0.01, ah_high = 1, 
+dataset = "gnomAD", alleleFreq = freq_gnomad.calc.gene)
+pen_1000g <-  get_penetrance(ah_low = 0.01, ah_high = 1, 
+dataset = "1000 Genomes", freq_1000g.count.gene)
 }
