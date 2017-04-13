@@ -1,22 +1,16 @@
 #' Import ClinVar VCF
 #'
-#' This function allows you to read a ClinVar VCF 
-#' into a table and extract important information
-#' from the INFO section. 
+#' This function allows you to read a ClinVar VCF into a table 
+#' and extract important information from the INFO section. 
 #' 
 #' @usage get_clinvar()
 #' get_clinvar(file)
-#' @param file Specifies the path to the VCF. 
+#' @param file character; specifies the path to the VCF. 
 #' @details getclinvar() collects the latest VCF from 'ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz'
 #' Specifying a file path will collect the VCF from that path instead. 
 #' @examples 
-#' clinvar_date <- system("ls ClinVar_Reports/VCF/clinvar*.vcf.gz", intern = T) %>% 
-#' strsplit("clinvar_") %>% sapply("[[",2) %>% unlist %>% 
-#' strsplit(".vcf.gz")  %>% sapply("[[",1) %>% unlist %>% as.Date() %>% max
-#' # collects the most recent date in './ClinVar_Reports/VCF'
-#' clinvar_file <- sprintf("ClinVar_Reports/VCF/clinvar_%s.vcf.gz", clinvar_date)
-#' # find the file name
-#' clinvar <- get_clinvar(clinvar_file)
+#' clinvar <- sprintf("ClinVar_Reports/VCF/clinvar_%s.vcf.gz", clinvar_date) %>% 
+#'               get_clinvar(clinvar_file)
 #' clinvar <- clinvar[!duplicated(clinvar$VAR_ID),] # remove duplicates
 #' @export
 
@@ -111,9 +105,9 @@ get_clinvar <- function(file) {
 #' Import Test ClinVar VCF
 #'
 #' This function imports the binary ClinVar VCF from April 4, 2017. 
+#' This skips the processing steps, allowing faster access for testing purposes
 #' 
 #' @usage get_test_clinvar() 
-#' @details get_test_clinvar() imports a binary ClinVar VCF for testing purposes. 
 #' @export
 
 get_test_clinvar <- function() {

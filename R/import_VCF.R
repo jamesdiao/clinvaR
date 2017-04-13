@@ -3,8 +3,13 @@
 #' This function imports a gene's VCF and extracts attributes into a 
 #' specified format for other clinvaR analyses
 #' 
-#' @usage import_file_exac(gene, dataset)
-#' @examples import_file_exac('BRCA2', 'gnomad')
+#' @usage import_file_exac(gene, dataset, path)
+#' @param gene character; any of the pre-stored genes in extdata/ExAC or extdata/gnomAD
+#' @param dataset character; choose from 'ExAC' or 'gnomAD'. 
+#' Not case-sensitive. Defaults to 'gnomAD'.
+#' @param path character; path to an importable VCF. Overrides gene and dataset inputs. 
+#' @examples 
+#' import_file_exac('BRCA2', 'gnomad')
 #' ACMG.exac <- NULL; ACMG.gnomad <- NULL
 #' for (gene in ACMG.panel) {
 #'   print(sprintf("[%d/%d] %s",which(gene==ACMG.panel),length(ACMG.panel),gene))
@@ -17,6 +22,7 @@
 
 import_file_exac <- function(gene, dataset, path) {
   dir <- system.file("extdata", "", package = "clinvaR")
+  if (missing(dataset)) dataset <- 'gnomAD'
   if (missing(path)) {
     output <- sprintf("%s%s/%s_%s.csv", dir, dataset, dataset, gene) %>% 
       read.csv(stringsAsFactors = FALSE)
@@ -60,12 +66,14 @@ import_file_exac <- function(gene, dataset, path) {
 }
 
 
-
 #' Imports downloaded VCF from 1000 Genomes
 #'
 #' This function imports a gene's VCF and extracts attributes from INFO 
 #' into a specified format for other clinvaR analyses
-#' @usage import_file_1000g(gene)
+#' @usage import_file_1000g(gene, dataset, path)
+#' @param gene character; any of the pre-stored genes in extdata/1000G
+#' Not case-sensitive. Defaults to 'gnomAD'.
+#' @param path character; path to an importable VCF. Overrides gene input. 
 #' @examples import_file_1000g('BRCA2')
 #' ACMG.1000g <- NULL
 #' for (gene in ACMG.panel) {

@@ -1,9 +1,16 @@
 #' Merge ClinVar with 1000 Genomes
 #'
 #' This function takes a merged ClinVar-sequencing dataset and 
-#' returns an ancestry-stratified plot of allele frequencies
+#' returns an ancestry-stratified plot of allele frequencies. 
+#' 
 #' @usage merge_clinvar_1000g(clinvar, ACMG.1000g)
-#' @examples merge_clinvar_1000g(clinvar, ACMG.1000g)
+#' @param clinvar data.frame; clinvaR-processed vcf containing ClinVar data. 
+#' Defaults to get_test_clinvar().  
+#' @param ACMG.1000g data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
+#' Defaults to 'extdata/Supplementary_Files/ACMG_1000G.rds'. 
+#' @examples 
+#' merge_clinvar_1000g()
+#' merge_clinvar_1000g(clinvar, ACMG.1000g)
 #' @export
 
 merge_clinvar_1000g <- function(clinvar, ACMG.1000g) {
@@ -28,8 +35,13 @@ merge_clinvar_1000g <- function(clinvar, ACMG.1000g) {
 #'
 #' This function takes a merged ClinVar-sequencing dataset and 
 #' returns an ancestry-stratified plot of allele frequencies
-#' @usage merge_clinvar_exac(clinvar, ACMG.1000g)
-#' @examples merge_clinvar_exac(clinvar, ACMG.1000g)
+#' @usage merge_clinvar_exac(clinvar, ACMG.exac)
+#' @param clinvar clinvaR-processed vcf containing ClinVar data. 
+#' Defaults to get_test_clinvar().  
+#' @param ACMG.exac clinvaR-processed vcf containing ExAC sequencing data. 
+#' Defaults to 'extdata/Supplementary_Files/ACMG_EXAC.rds'. 
+#' @examples merge_clinvar_exac()
+#' merge_clinvar_exac(clinvar, ACMG.exac)
 #' @export
 
 merge_clinvar_exac <- function(clinvar, ACMG.exac) {
@@ -54,8 +66,13 @@ merge_clinvar_exac <- function(clinvar, ACMG.exac) {
 #'
 #' This function takes a merged ClinVar-sequencing dataset and 
 #' returns an ancestry-stratified plot of allele frequencies
-#' @usage merge_clinvar_gnomad(clinvar, ACMG.1000g)
-#' @examples merge_clinvar_gnomad(clinvar, ACMG.1000g)
+#' @usage merge_clinvar_gnomad(clinvar, ACMG.gnomad)
+#' @param clinvar clinvaR-processed vcf containing ClinVar data. 
+#' Defaults to get_test_clinvar().  
+#' @param ACMG.gnomAD clinvaR-processed vcf containing gnomAD sequencing data. 
+#' Defaults to 'extdata/Supplementary_Files/ACMG_GNOMAD.rds'. 
+#' @examples merge_clinvar_gnomad()
+#' merge_clinvar_gnomad(clinvar, ACMG.gnomad)
 #' @export
 
 merge_clinvar_gnomad <- function(clinvar, ACMG.gnomad) {

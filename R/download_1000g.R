@@ -1,9 +1,13 @@
 #' Downloads VCF from 1000 Genomes using tabix
 #'
 #' This function downloads a gene's VCF from the 1000 Genomes FTP based on its transcription region
-#' as listed in the UCSC Genome database. 
+#' as listed in the UCSC Genome database.
 #' @usage download_1000g(gene, download)
-#' @examples download_1000g('BRCA2', download = T)
+#' @param gene character; name of a gene indexed in refGene
+#' @param download logical; indicates whether to download the file. 
+#' FALSE still returns transcription coordinates and RefGene details from UCSC. 
+#' @examples 
+#' download_1000g('BRCA2', download = T)
 #' download_output <- sapply(ACMG.panel, function(gene) download_1000g(gene, download = T)) %>% t
 
 

@@ -1,8 +1,18 @@
-#' Barplot of ancestry-stratified 1000 Genomes allele frequencies
+#' Formatted ggplot of ancestry-stratified 1000 Genomes allele frequencies
 #'
 #' Barplot of ancestry-stratified values 
-#' @usage prettyprint(values, title = NULL, sd = TRUE, ylimit = NULL, xlabel = "Population", ylabel = NULL)
-#' @examples prettyprint(values, title = title, sd = F, ylimit = NULL, 
+#' 
+#' @usage prettyprint(values, sd, title, ylimit, xlabel, ylabel)
+#' ## Default method
+#' prettyprint(values, title = NULL, sd = TRUE, ylimit = NULL, xlabel = "Population", ylabel = NULL)
+#' @param values data frame (26 x 2); values (mean and sd) for each 1000 genomes population
+#' @param sd logical; show standard deviation bars 
+#' @param title character; plot title
+#' @param ylimit 2 element vector; specifies bounds of y-axis
+#' @param xlabel character; label for x-axis
+#' @param ylabel character; label for y-axis
+#' @examples 
+#' prettyprint(values, title = title, sd = F, ylimit = NULL, 
 #' xlabel = "Population", ylabel = "Fraction with at least 1 non-reference site")
 #' @export
 #' 

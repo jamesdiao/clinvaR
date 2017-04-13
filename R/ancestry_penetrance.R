@@ -6,11 +6,22 @@
 #' The function returns the computed table of penetrance values (disease-conditions by superpopulations). 
 #'
 #' @usage ancestry_penetrance(ah_low, ah_high, dataset, position, alleleFreq)
-#' @examples ancestry_pen <- ancestry_penetrance(ah_low = 0.01, ah_high = 1, dataset = "gnomAD", 
+#' @param ah_low numeric; lower allelic heterogeneity bound.
+#' @param ah_high numeric; hgher allelic heterogeneity bound.
+#' @param dataset character; dataset name. Choose from 1000 Genomes, ExAC, or gnomAD (not case sensitive)
+#' @param position character; max or Median. Defaults to Max.
+#' @param alleleFreq data frame (31 x n); contains the columns 'AF_[dataset]_[population]' 
+#' for 5 superpopulations and the general population. Typically an output from getAlleleFreq().
+#' @examples 
+#' ancestry_pen <- ancestry_penetrance(ah_low = 0.01, ah_high = 1, dataset = "gnomAD", 
 #' position = "Max", alleleFreq = freq_gnomad.calc.gene)
 #' @export
 
 ancestry_penetrance <- function(ah_low, ah_high, dataset, position, alleleFreq) {
+  if (!(toupper(dataset) %in% c('1000 GENOMES','EXAC','GNOMAD'))) 
+    stop('Dataset must be either 1000 Genomes, ExAC, or gnomAD', call. = TRUE, domain = NULL)
+  if(missing(position)) 
+    position <- 'Max'
   super.levels <- c("AFR", "AMR", "EAS", "EUR", "SAS")
   ACMG_Lit_Full <- system.file("extdata", "Supplementary_Files/Literature_Prevalence_Estimates.csv", package = "clinvaR") %>% 
     read.csv(header = TRUE, stringsAsFactors = F, na.strings = "\\N") 
@@ -21,11 +32,15 @@ ancestry_penetrance <- function(ah_low, ah_high, dataset, position, alleleFreq) 
   pos <- replace(c(F,F,F,F,F), ifelse(position == "Max", 5, 3), T)
   sapply(c("Total",super.levels), function(superpop){
     # Map of disease name to disease tags
-    find <- paste0("AF_", toupper(dataset))
-    named.freqs <- alleleFreq[ACMG_Lit_Full$Evaluate,]
+    named.freqs <- alleleFreq
+    if (nrow(allele.freq)==nrow(ACMG_Lit_Full))
+      named.freqs <- alleleFreq[ACMG_Lit_Full$Evaluate,]
+    
+    find <- sprintf("AF_%s", toupper(dataset))
     if (superpop != "Total") 
-      find <- paste(find, superpop, sep = "_")
+      find <- sprintf('AF_%s_%s',toupper(dataset), superpop)
     named.freqs <- named.freqs[,find] %>% unlist %>% setNames(abbrev)
+    
     allelic.het <- c(ah_low, ah_low, mean(c(ah_low, ah_high)) %>% signif(3), ah_high, ah_high) %>% 
       rep(nrow(ACMG_Lit)) %>% matrix(nrow = nrow(ACMG_Lit), byrow = T)
     allelic.het[,3] <- acmg_ah

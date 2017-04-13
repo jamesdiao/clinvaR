@@ -3,6 +3,8 @@
 #' This function takes a merged ClinVar-sequencing dataset and 
 #' returns an ancestry-stratified plot of allele frequencies
 #' @usage var_plot_1000g(pathogenic, frac)
+#' @param pathogenic logical; whether to limit frequency counts to pathogenic variants only. 
+#' @param frac logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts. 
 #' @examples var_plot_1000g(pathogenic = T, frac = T)
 #' @export
 
@@ -59,6 +61,8 @@ var_plot_1000g <- function(clinvar, ACMG.1000g, pathogenic, frac) {
 #' This function takes a merged ClinVar-sequencing dataset and 
 #' returns an ancestry-stratified plot of allele frequencies
 #' @usage var_plot_exac(clinvar, ACMG.exac, pathogenic, frac)
+#' @param pathogenic logical; whether to limit frequency counts to pathogenic variants only. 
+#' @param frac logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts. 
 #' @examples var_plot_exac(clinvar, ACMG.exac, pathogenic = T, frac = T)
 #' @export
 
