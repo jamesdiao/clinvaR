@@ -6,6 +6,11 @@
 \usage{
 var_plot_exac(clinvar, ACMG.exac, pathogenic, frac)
 }
+\arguments{
+\item{pathogenic}{logical; whether to limit frequency counts to pathogenic variants only.}
+
+\item{frac}{logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts.}
+}
 \description{
 This function takes a merged ClinVar-sequencing dataset and 
 returns an ancestry-stratified plot of allele frequencies

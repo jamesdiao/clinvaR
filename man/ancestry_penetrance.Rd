@@ -6,6 +6,18 @@
 \usage{
 ancestry_penetrance(ah_low, ah_high, dataset, position, alleleFreq)
 }
+\arguments{
+\item{ah_low}{numeric; lower allelic heterogeneity bound.}
+
+\item{ah_high}{numeric; hgher allelic heterogeneity bound.}
+
+\item{dataset}{character; dataset name. Choose from 1000 Genomes, ExAC, or gnomAD (not case sensitive)}
+
+\item{position}{character; max or Median. Defaults to Max.}
+
+\item{alleleFreq}{data frame (31 x n); contains the columns 'AF_[dataset]_[population]' 
+for 5 superpopulations and the general population. Typically an output from getAlleleFreq().}
+}
 \description{
 This function uses prevalence and allele frequency data to compute point and range 
 estimates for penetrance. These are used to generate three plots: 

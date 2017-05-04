@@ -4,7 +4,13 @@
 \alias{import_file_1000g}
 \title{Imports downloaded VCF from 1000 Genomes}
 \usage{
-import_file_1000g(gene)
+import_file_1000g(gene, dataset, path)
+}
+\arguments{
+\item{gene}{character; any of the pre-stored genes in extdata/1000G
+Not case-sensitive. Defaults to 'gnomAD'.}
+
+\item{path}{character; path to an importable VCF. Overrides gene input.}
 }
 \description{
 This function imports a gene's VCF and extracts attributes from INFO 

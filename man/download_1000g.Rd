@@ -6,6 +6,12 @@
 \usage{
 download_1000g(gene, download)
 }
+\arguments{
+\item{gene}{character; name of a gene indexed in refGene}
+
+\item{download}{logical; indicates whether to download the file. 
+FALSE still returns transcription coordinates and RefGene details from UCSC.}
+}
 \description{
 This function downloads a gene's VCF from the 1000 Genomes FTP based on its transcription region
 as listed in the UCSC Genome database.

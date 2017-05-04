@@ -2,9 +2,24 @@
 % Please edit documentation in R/prettyprint.R
 \name{prettyprint}
 \alias{prettyprint}
-\title{Barplot of ancestry-stratified 1000 Genomes allele frequencies}
+\title{Formatted ggplot of ancestry-stratified 1000 Genomes allele frequencies}
 \usage{
+prettyprint(values, sd, title, ylimit, xlabel, ylabel)
+## Default method
 prettyprint(values, title = NULL, sd = TRUE, ylimit = NULL, xlabel = "Population", ylabel = NULL)
+}
+\arguments{
+\item{values}{data frame (26 x 2); values (mean and sd) for each 1000 genomes population}
+
+\item{sd}{logical; show standard deviation bars}
+
+\item{title}{character; plot title}
+
+\item{xlabel}{character; label for x-axis}
+
+\item{ylabel}{character; label for y-axis}
+
+\item{ylimit}{2 element vector; specifies bounds of y-axis}
 }
 \description{
 Barplot of ancestry-stratified values

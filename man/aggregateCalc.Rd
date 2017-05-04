@@ -4,7 +4,22 @@
 \alias{aggregateCalc}
 \title{Aggregate Allele Frequencies Using Independence Assumption}
 \usage{
-aggregateCalc(input, superpop, item, dataset, loc, inherit, sample_size)
+aggregateCalc(input, superpop, item, dataset, loc, inherit)
+}
+\arguments{
+\item{input}{data frame; merged ClinVar-sequencing dataset. Defaults to merge_clinvar_[dataset]().}
+
+\item{superpop}{character; choose from 'AFR','AMR','EAS','EUR','Total'. Defaults to 'Total'.}
+
+\item{item}{character; can be an item from GENE, MIM, or MEDGEN.}
+
+\item{dataset}{character; choose from '1000 Genomes','ExAC', or 'gnomAD'. 
+Not case-sensitive. Defaults to 'gnomAD'.}
+
+\item{loc}{numeric; subsets variants related to a certain disease-condition. Defaults to rep(T, nrow(input)).}
+
+\item{inherit}{vector of named characters; from 'AD', 'SD', AR', 'XL'. 
+Names are a list of items from GENE, MIM, or MEDGEN.}
 }
 \description{
 This function computes an aggregated allele frequency: P(any pathogenic allele) across 
@@ -13,5 +28,5 @@ ancestral groups.
 }
 \examples{
 aggregateCalc(input = merged_1000g, superpop = 'AFR', item = 'BRCA2', dataset = '1000 Genomes', 
-loc = rep(T, nrow(merged_1000g)), inherit.use = inheritance.gene, sample_size = sample_size)
+loc = rep(T, nrow(merged_1000g)), inherit.use = inheritance.gene)
 }

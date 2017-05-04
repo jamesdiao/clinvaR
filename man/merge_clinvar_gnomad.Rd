@@ -4,12 +4,20 @@
 \alias{merge_clinvar_gnomad}
 \title{Merge ClinVar with gnomAD}
 \usage{
-merge_clinvar_gnomad(clinvar, ACMG.1000g)
+merge_clinvar_gnomad(clinvar, ACMG.gnomad)
+}
+\arguments{
+\item{clinvar}{clinvaR-processed vcf containing ClinVar data. 
+Defaults to get_test_clinvar().}
+
+\item{ACMG.gnomAD}{clinvaR-processed vcf containing gnomAD sequencing data. 
+Defaults to 'extdata/Supplementary_Files/ACMG_GNOMAD.rds'.}
 }
 \description{
 This function takes a merged ClinVar-sequencing dataset and 
 returns an ancestry-stratified plot of allele frequencies
 }
 \examples{
-merge_clinvar_gnomad(clinvar, ACMG.1000g)
+merge_clinvar_gnomad()
+merge_clinvar_gnomad(clinvar, ACMG.gnomad)
 }

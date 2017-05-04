@@ -6,12 +6,22 @@
 \usage{
 getAlleleFreq(input, ind, dataset, method)
 }
+\arguments{
+\item{input}{data frame; merged ClinVar-sequencing dataset. Defaults to merge_clinvar_[dataset]().}
+
+\item{ind}{logical; compute using independence assumption. 
+FALSE is only permitted for 1000 Genomes data. Defaults to TRUE.}
+
+\item{dataset}{character; choose from '1000 Genomes','ExAC', or 'gnomAD'. 
+Not case-sensitive. Defaults to 'gnomAD'.}
+
+\item{method}{character; choose from 'Gene','MIM','MedGen'. Not case-sensitive. Defaults to 'Gene'.}
+}
 \description{
 Compute Aggregate Allele Frequencies by ACMG Condition
 }
 \examples{
+freq_gnomad.calc.gene <- getAlleleFreq()
 freq_1000g.count.gene <- getAlleleFreq(input = merged_1000g, ind = F, dataset = "1000G", method = "Gene")
-freq_1000g.calc.gene <- getAlleleFreq(input = merged_1000g, ind = T, dataset = "1000G", method = "Gene")
-freq_gnomad.calc.gene <- getAlleleFreq(input = merged_gnomad, ind = T, dataset = "GNOMAD", method = "Gene")
 freq_exac.calc.gene <- getAlleleFreq(input = merged_exac, ind = T, dataset = "EXAC",method = "Gene")
 }

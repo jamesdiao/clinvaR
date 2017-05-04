@@ -4,7 +4,15 @@
 \alias{import_file_exac}
 \title{Imports downloaded VCF from ExAC or gnomAD}
 \usage{
-import_file_exac(gene, dataset)
+import_file_exac(gene, dataset, path)
+}
+\arguments{
+\item{gene}{character; any of the pre-stored genes in extdata/ExAC or extdata/gnomAD}
+
+\item{dataset}{character; choose from 'ExAC' or 'gnomAD'. 
+Not case-sensitive. Defaults to 'gnomAD'.}
+
+\item{path}{character; path to an importable VCF. Overrides gene and dataset inputs.}
 }
 \description{
 This function imports a gene's VCF and extracts attributes into a 

@@ -4,14 +4,22 @@
 \alias{get_penetrance}
 \title{Compute and Plot Penetrance Ranges by ACMG Condition}
 \usage{
-get_penetrance(ah_low, ah_high, dataset)
+get_penetrance(ah_low, ah_high, dataset, alleleFreq)
+}
+\arguments{
+\item{ah_low}{numeric; lower allelic heterogeneity bound.}
+
+\item{ah_high}{numeric; higher allelic heterogeneity bound.}
+
+\item{dataset}{character; dataset name. Choose from 1000 Genomes, ExAC, or gnomAD (not case sensitive)}
+
+\item{alleleFreq}{data frame (31 x n); contains the columns 'AF_[dataset]_[population]' 
+for 5 superpopulations and the general population. Typically an output from getAlleleFreq().}
 }
 \description{
 Compute and Plot Penetrance Ranges by ACMG Condition
 }
 \examples{
-pen_gnomad <- get_penetrance(ah_low = 0.01, ah_high = 1, 
-dataset = "gnomAD", alleleFreq = freq_gnomad.calc.gene)
-pen_1000g <-  get_penetrance(ah_low = 0.01, ah_high = 1, 
-dataset = "1000 Genomes", freq_1000g.count.gene)
+pen_gnomad <- get_penetrance(ah_low = 0.01, ah_high = 1, dataset = "gnomAD", alleleFreq = freq_gnomad.calc.gene)
+pen_1000g <-  get_penetrance(ah_low = 0.01, ah_high = 1, dataset = "1000 Genomes", alleleFreq = freq_1000g.count.gene)
 }

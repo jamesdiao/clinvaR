@@ -6,10 +6,18 @@
 \usage{
 merge_clinvar_1000g(clinvar, ACMG.1000g)
 }
+\arguments{
+\item{clinvar}{data.frame; clinvaR-processed vcf containing ClinVar data. 
+Defaults to get_test_clinvar().}
+
+\item{ACMG.1000g}{data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
+Defaults to 'extdata/Supplementary_Files/ACMG_1000G.rds'.}
+}
 \description{
 This function takes a merged ClinVar-sequencing dataset and 
-returns an ancestry-stratified plot of allele frequencies
+returns an ancestry-stratified plot of allele frequencies.
 }
 \examples{
+merge_clinvar_1000g()
 merge_clinvar_1000g(clinvar, ACMG.1000g)
 }

@@ -4,12 +4,20 @@
 \alias{merge_clinvar_exac}
 \title{Merge ClinVar with ExAC}
 \usage{
-merge_clinvar_exac(clinvar, ACMG.1000g)
+merge_clinvar_exac(clinvar, ACMG.exac)
+}
+\arguments{
+\item{clinvar}{clinvaR-processed vcf containing ClinVar data. 
+Defaults to get_test_clinvar().}
+
+\item{ACMG.exac}{clinvaR-processed vcf containing ExAC sequencing data. 
+Defaults to 'extdata/Supplementary_Files/ACMG_EXAC.rds'.}
 }
 \description{
 This function takes a merged ClinVar-sequencing dataset and 
 returns an ancestry-stratified plot of allele frequencies
 }
 \examples{
-merge_clinvar_exac(clinvar, ACMG.1000g)
+merge_clinvar_exac()
+merge_clinvar_exac(clinvar, ACMG.exac)
 }

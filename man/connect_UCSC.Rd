@@ -4,8 +4,13 @@
 \alias{connect_UCSC}
 \title{Connect to UCSC hg19 Genome Database}
 \usage{
-connect_UCSC
+connect_UCSC()
 }
 \description{
-This function makes a connection to the hg19 genome database and defines a query function.
+This function makes a connection to the hg19 genome database and defines a query wrapper function.
+}
+\examples{
+connect_UCSC()
+refGene <- sprintf('select * from refGene where name2 = "\%s" limit 20', gene) \%>\% query
+UCSC <- select(refGene, name, chrom, start = txStart, end = txEnd)
 }

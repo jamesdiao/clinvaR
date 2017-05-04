@@ -7,8 +7,6 @@
 get_test_clinvar()
 }
 \description{
-This function imports the binary ClinVar VCF from April 4, 2017.
-}
-\details{
-get_test_clinvar() imports a binary ClinVar VCF for testing purposes.
+This function imports the binary ClinVar VCF from April 4, 2017. 
+This skips the processing steps, allowing faster access for testing purposes
 }
