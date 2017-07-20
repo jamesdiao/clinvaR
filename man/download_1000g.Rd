@@ -4,10 +4,10 @@
 \alias{download_1000g}
 \title{Downloads VCF from 1000 Genomes using tabix}
 \usage{
-download_1000g(gene, download)
+download_1000g(genes, download)
 }
 \arguments{
-\item{gene}{character; name of a gene indexed in refGene}
+\item{genes}{character; name of a gene(s) indexed in refGene}
 
 \item{download}{logical; indicates whether to download the file. 
 FALSE still returns transcription coordinates and RefGene details from UCSC.}

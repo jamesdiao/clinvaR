@@ -4,7 +4,7 @@
 \alias{import_file_1000g}
 \title{Imports downloaded VCF from 1000 Genomes}
 \usage{
-import_file_1000g(gene, dataset, path)
+import_file_1000g(genes, dataset, path)
 }
 \arguments{
 \item{gene}{character; any of the pre-stored genes in extdata/1000G
@@ -24,5 +24,4 @@ ACMG.1000g <- rbind(ACMG.1000g,import_file_1000g(gene))
 }
 #ACMG.1000g[duplicated(ACMG.1000g$VAR_ID),1:8] # Display and remove duplicates
 ACMG.1000g <- ACMG.1000g[!duplicated(ACMG.1000g$VAR_ID),]
-#@export
 }
