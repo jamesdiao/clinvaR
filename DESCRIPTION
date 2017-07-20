@@ -4,7 +4,7 @@ Version: 1.0.0
 Date: 2017-07-07
 Authors@R: person("James", "Diao", email = "diao.james@gmail.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
-Depends: R (>= 3.3.2), pander, RMySQL, scrapeR, curl, tidyr, tibble, knitr, ggplot2, ggrepel, dplyr
+Depends: R (>= 3.3.1), pander, RMySQL, curl, tidyr, tibble, ggplot2, dplyr
 License: NA
 Encoding: UTF-8
 LazyData: true
