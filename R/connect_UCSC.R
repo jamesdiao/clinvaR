@@ -15,3 +15,4 @@ connect_UCSC <- function() {
   query <- function (input) { suppressWarnings(dbGetQuery(con, input)) }
   return(query)
 }
+

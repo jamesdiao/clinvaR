@@ -9,7 +9,7 @@
 #' @examples 
 #' download_1000g('BRCA2', download = T)
 #' download_output <- sapply(ACMG.panel, function(gene) download_1000g(gene, download = T)) %>% t
-
+#' @export
 
 download_1000g <- function(gene, download) {
   if (missing(download)) {
@@ -44,8 +44,9 @@ download_1000g <- function(gene, download) {
       exists <- grepl(paste0(gene,"_genotypes.vcf"), 
                       system(sprintf("ls %s", dir), intern = T)
                       ) %>% any
-      file.size <- strsplit(sprintf("stat %s%s_genotypes.vcf", dir, gene) %>% 
-                              system(intern = T), " ")[[1]][8]
+      file.size <- unlist(sprintf("stat %s%s_genotypes.vcf", dir, gene) %>% 
+                          system(intern = T) %>% strsplit(" "))[grep("Size",file.stat)+1] %>% 
+                          as.integer()
       success <- exists & file.size > 0
     }
   }

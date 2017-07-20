@@ -15,5 +15,6 @@ freq_CI <- function(freq, n, cutoff) {
     cutoff <- 0.95
   obs_success = freq * n
   obs_failure = n-obs_success
-  return(qbeta(p = cutoff, shape1 = obs_success+1, shape2 = obs_failure+1, lower.tail = F))
+  qbeta(p = cutoff, shape1 = obs_success+1, shape2 = obs_failure+1, lower.tail = F) %>% 
+    return()
 }

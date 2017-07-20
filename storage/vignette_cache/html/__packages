@@ -1,0 +1,17 @@
+base
+XML
+bitops
+RCurl
+scrapeR
+DBI
+RMySQL
+knitr
+pander
+ggplot2
+curl
+tidyr
+tibble
+ggrepel
+dplyr
+clinvaR
+stringr
