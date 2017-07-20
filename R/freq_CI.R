@@ -3,7 +3,7 @@
 #' This function computes a one-Tailed Beta distribution confidence interval from observed alleles
 #' @usage freq_CI(freq, n, cutoff)
 #' @param freq numeric; observed frequency
-#' @param cutoff numeric; upper tailed confidence range. Default is 95% = 0.95. 
+#' @param cutoff numeric; upper tailed confidence range. Default is 95\% = 0.95. 
 #' @param n numeric; number of observations, equal to the number of observed alleles 
 #' (twice the number of observed individuals). This is hard coded using dataset FAQs for 
 #' the aggregateCount() and aggregateCalc() functions

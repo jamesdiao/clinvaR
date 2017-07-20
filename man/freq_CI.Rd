@@ -13,7 +13,7 @@ freq_CI(freq, n, cutoff)
 (twice the number of observed individuals). This is hard coded using dataset FAQs for 
 the aggregateCount() and aggregateCalc() functions}
 
-\item{cutoff}{numeric; upper tailed confidence range. Default is 95% = 0.95.}
+\item{cutoff}{numeric; upper tailed confidence range. Default is 95\% = 0.95.}
 }
 \description{
 This function computes a one-Tailed Beta distribution confidence interval from observed alleles
