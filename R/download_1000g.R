@@ -44,9 +44,9 @@ download_1000g <- function(gene, download) {
       exists <- grepl(paste0(gene,"_genotypes.vcf"), 
                       system(sprintf("ls %s", dir), intern = T)
                       ) %>% any
-      file.size <- unlist(sprintf("stat %s%s_genotypes.vcf", dir, gene) %>% 
-                          system(intern = T) %>% strsplit(" "))[grep("Size",file.stat)+1] %>% 
-                          as.integer()
+      file.stat <- unlist(sprintf("stat %s_genotypes.vcf", gene) %>% 
+                      system(intern = T) %>% strsplit(" "))
+      file.size <- file.stat[grep("Size",file.stat)+1] %>% as.integer
       success <- exists & file.size > 0
     }
   }

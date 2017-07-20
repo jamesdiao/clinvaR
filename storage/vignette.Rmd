@@ -101,9 +101,34 @@ setwd("../")
 
 Collect ClinVar file
 
-This can be done either using the latest saved version (fast) or the 
+This can be done either using the latest saved version (July 5, 2017), or by specifying a date from the list. 
 
 ```{r}
+require(stringr)
+setwd('/Users/jamesdiao/Documents/Kohane_Lab/clinvaR/inst/extdata')
+get_date_list <- function() {
+  clinvar_reports <- system("ls Archive_Tables", intern = T)
+  clinvar_reports <- clinvar_reports[grep(".tsv",clinvar_reports)]
+  do.call("rbind", lapply(clinvar_reports, function(tsv) {
+    read.table(file = sprintf("Archive_Tables/%s", tsv), sep = "\t", 
+               header = T, stringsAsFactors = F)
+  })) -> archive
+  regmatches(archive$Name,regexpr("^File:clinvar_(20.{6})\\.vcf\\.gz$",archive$Name)) %>% 
+    str_extract("20.{6}") %>% as.Date(format = "%Y%m%d") %>% unique()
+}
+all_dates <- get_date_list()
+
+get_dates <- function(date_list, range) {
+  date_list <- date_list %>% as.Date()
+  if (!exists("all_dates"))
+    all_dates <- get_date_list()
+  if (range) {
+    keep <- between(all_dates, min(date_list), max(date_list))
+  } else {
+    keep <- all_dates %in% date_list
+  }
+  all_dates[keep] %>% as.character()
+}
 clinvar <- get_test_clinvar()
 ```
 
