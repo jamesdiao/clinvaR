@@ -134,6 +134,7 @@ import_file_1000g <- function(genes) {
   header <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", as.character(map$sample))
   combined <- NULL
   for (gene in genes) {
+    print(sprintf("[%d/%d] %s", which(gene==genes), length(genes), gene))
     combined <- rbind(combined, temp_function(gene))
   }
   combined <- combined[!duplicated(combined$VAR_ID),]

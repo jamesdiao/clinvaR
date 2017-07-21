@@ -16,8 +16,8 @@ The first step is to have a list of genes that you are interested in.
 The easiest way is to directly save your genes of interest in gene_panel as a character vector (all caps):
 
 ```{r}
-pkg_list <- c("scrapeR","RMySQL", "knitr","pander","ggplot2","clinvaR",
-              "ggrepel", "tibble","curl","tidyr","dplyr", "stringr")
+pkg_list <- c("knitr","pander","ggplot2","clinvaR",
+              "tibble","curl","tidyr","dplyr", "stringr")
 installed <- pkg_list %in% installed.packages()[,"Package"]
 if (!all(installed))
   install.packages(pkg_list[!installed])
@@ -77,31 +77,14 @@ The last way is to search OMIM for related genes.
 #search_terms <- c("Cardiomyopathy")
 ```
 
-Then, you need tabix from samtools. This allows you to download 
+Then, you can download variants of interest from 1000 Genomes
 
 ```{r}
-system("mkdir 1000G")
-setwd(paste(getwd(), "1000G", sep = "/"))
-download_output <- sapply(gene_panel, function(gene) download_1000g(gene, download = T)) %>% t
-print(download_output, quote = F)
-download_output <- download_output %>% apply(2, unlist) %>% 
-  as.data.frame(stringsAsFactors = F) %>% 
-  mutate("gene" = rownames(download_output)) %>% 
-  select(gene, everything()) %>% filter(downloaded != "NOT_FOUND")
-download_output <- download_output %>%
-  mutate(chrom = sapply(strsplit(download_output$chrom,"chr"), function(x) x[2]), 
-         start = as.integer(start), end = as.integer(end), 
-         downloaded = as.logical(downloaded))
-write.table(download_output, file = "download_output.txt", 
-            row.names = F, col.names = T, quote = F, sep = "\t")
-system("rm *.genotypes.vcf.gz.tbi")
-setwd("../")
+download_output <- download_1000g(genes = gene_panel)
+final_vcf <- import_file_1000g(genes = gene_panel)
 ```
 
-
-Collect ClinVar file
-
-This can be done either using the latest saved version (July 5, 2017), or by specifying a date from the list. 
+This must be merged with some version of ClinVar. This can be done either using the latest saved version (July 5, 2017), or by specifying a date from the list. 
 
 ```{r}
 require(stringr)
@@ -132,6 +115,17 @@ get_dates <- function(date_list, range) {
 clinvar <- get_test_clinvar()
 ```
 
+Then, we merge clinvar with the genes of interest. We can also slice clinvar itself to collect only
+relevant entries. 
+
+```{r}
+sapply(gene_panel, gene, function(x) {
+  
+})
+clinvar$CHROM %>% paste0(str_pad(clinvar$POS, 10, side = 'left', pad = "0")) %>% as.numeric %>% 
+  between(start, stop) -> filter_condition
+clinvar <- filter(clinvar, filter_condition)
+```
 
 
 
