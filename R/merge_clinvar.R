@@ -5,7 +5,7 @@
 #' 
 #' @usage merge_clinvar_1000g(clinvar, ACMG.1000g)
 #' @param clinvar data.frame; clinvaR-processed vcf containing ClinVar data. 
-#' Defaults to get_test_clinvar().  
+#' Defaults to get_clinvar().  
 #' @param ACMG.1000g data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
 #' Defaults to 'extdata/Supplementary_Files/ACMG_1000G.rds'. 
 #' @examples 
@@ -13,13 +13,12 @@
 #' merge_clinvar_1000g(clinvar, ACMG.1000g)
 #' @export
 
-merge_clinvar_1000g <- function(clinvar, ACMG.1000g) {
+merge_clinvar_1000g <- function(clinvar, vcf) {
   if (missing(clinvar)) {
-    clinvar <- get_test_clinvar()
+    clinvar <- get_clinvar()
   }
-  if (missing(ACMG.1000g)) {
-    system.file("extdata", "Supplementary_Files/ACMG_1000G.rds", package = "clinvaR") %>% 
-      readRDS -> ACMG.1000g
+  if (missing(vcf)) {
+    vcf <- import_file_1000g()
   }
   inter <- intersect(clinvar$VAR_ID[clinvar$INTERP], ACMG.1000g$VAR_ID)
   clinvar_merged <- clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID)

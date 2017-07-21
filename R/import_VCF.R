@@ -84,6 +84,17 @@ import_file_exac <- function(gene, dataset, path) {
 #' @export
 
 import_file_1000g <- function(genes) {
+  dir <- system.file("extdata", package = "clinvaR")
+  
+  if (missing(genes)) {
+    contents <- system(sprintf('ls %s/1000G', dir), intern = T)
+    contents <- contents[grepl('_genotypes_vcf.rds', contents)]
+    if (length(contents)==0) {
+      stop('Error: no genes detected in downloads folder')
+    } else {
+      genes <- str_match(string = contents, pattern = '([^_]*)_genotypes_vcf.rds')[,2]
+    }
+  }
   
   temp_function <- function(gene) {
     path <- sprintf("%s/1000G/%s_genotypes_vcf.rds", dir, gene)
@@ -129,13 +140,19 @@ import_file_1000g <- function(genes) {
     return(output)
   }
   
-  dir <- system.file("extdata", package = "clinvaR")
   map <- read.table(file = sprintf("%s/Supplementary_Files/phase3map.txt", dir), stringsAsFactors = F, header = T) %>% as.data.frame
   header <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", as.character(map$sample))
   combined <- NULL
   for (gene in genes) {
-    print(sprintf("[%d/%d] %s", which(gene==genes), length(genes), gene))
-    combined <- rbind(combined, temp_function(gene))
+    if (!any(grepl(gene, system(sprintf('ls %s/1000G', dir), intern = T)))) {
+      print(sprintf("ERROR at [%d/%d] %s: VCF file not found", which(gene==genes), length(genes), gene))
+      print("Attempting download...")
+      print(ifelse(download_1000g(gene)['downloaded',] %>% unlist, "Success", "Failure"))
+    } else {
+      print(sprintf("Importing [%d/%d] %s", which(gene==genes), length(genes), gene))
+      combined <- rbind(combined, temp_function(gene))
+    }
+    
   }
   combined <- combined[!duplicated(combined$VAR_ID),]
   return(combined)

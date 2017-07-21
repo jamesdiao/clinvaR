@@ -3,18 +3,18 @@
 #' This function allows you to read a ClinVar VCF into a table 
 #' and extract important information from the INFO section. 
 #' 
-#' @usage get_clinvar()
-#' get_clinvar(file)
+#' @usage download_clinvar()
+#' download_clinvar(file)
 #' @param file character; specifies the path to the VCF. 
 #' @details getclinvar() collects the latest VCF from 'ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz'
 #' Specifying a file path will collect the VCF from that path instead. 
 #' @examples 
 #' clinvar <- sprintf("ClinVar_Reports/VCF/clinvar_%s.vcf.gz", clinvar_date) %>% 
-#'               get_clinvar(clinvar_file)
+#'               download_clinvar(clinvar_file)
 #' clinvar <- clinvar[!duplicated(clinvar$VAR_ID),] # remove duplicates
 #' @export
 
-get_clinvar <- function(file) {
+download_clinvar <- function(file) {
   if (missing(file)) {
     dir <- system.file("extdata", "Supplementary_Files/", package = "clinvaR")
     file <- sprintf("%sclinvar_%s.vcf.gz", dir, Sys.Date())
@@ -102,19 +102,58 @@ get_clinvar <- function(file) {
   input
 }
 
-#' Import Test ClinVar VCF
+#' Get List of Available ClinVar Version Dates
 #'
-#' This function imports the binary ClinVar VCF from April 4, 2017. 
-#' This skips the processing steps, allowing faster access for testing purposes
+#' This function returns the dates of all available ClinVar VCFs
 #' 
-#' @usage get_test_clinvar() 
+#' @usage get_date_list() 
 #' @export
 
-get_test_clinvar <- function() {
-  system.file("extdata", "Supplementary_Files/clinvar_test.rds", package = "clinvaR") %>% 
-    readRDS %>% return
+get_date_list <- function() {
+  dir <- system.file("extdata", package = "clinvaR")
+  clinvar_reports <- system(sprintf("ls %s/Archive_Tables", dir), intern = T)
+  clinvar_reports <- clinvar_reports[grep(".tsv",clinvar_reports)]
+  do.call("rbind", lapply(clinvar_reports, function(tsv) {
+    read.table(file = sprintf("%s/Archive_Tables/%s", dir, tsv), sep = "\t", 
+               header = T, stringsAsFactors = F)
+  })) -> archive
+  regmatches(archive$Name,regexpr("^File:clinvar_(20.{6})\\.vcf\\.gz$",archive$Name)) %>% 
+    str_extract("20.{6}") %>% as.Date(format = "%Y%m%d") %>% unique()
 }
-  
-  
+
+#' Get Closest ClinVar Version Dates
+#'
+#' This function returns the closest ClinVar date to the input date. 
+#' If there is no input, it defaults to the current date. 
+#' 
+#' @usage get_date_list() 
+#' get_date_list(date)
+#' @param file character; input date in the format %y-%m-%d. Ex: 2017-07-05.  
+#' @export
+
+get_closest_date <- function(date) {
+  if (missing(date)) 
+    date <- Sys.Date()
+  all_dates <- get_date_list()
+  all_dates[which.min(abs(as.Date(all_dates) - as.Date(date)))]
+}
+
+#' Get ClinVar Version from Date
+#'
+#' This function returns the ClinVar version from the date closest to the input date. 
+#' If there is no input, it defaults to the current date. 
+#' 
+#' @usage get_clinvar()
+#' get_clinvar(date)
+#' @param file character; input date in the format %y-%m-%d. Ex: 2017-07-05.  
+#' @export
+
+get_clinvar <- function(date) {
+  if (missing(date)) 
+    date <- Sys.Date()
+  system.file("extdata", sprintf('RDS/clinvar_%s.rds', get_closest_date(date)), 
+              package = "clinvaR") %>% readRDS %>% return
+}
+
   
   

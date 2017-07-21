@@ -8,7 +8,7 @@ merge_clinvar_1000g(clinvar, ACMG.1000g)
 }
 \arguments{
 \item{clinvar}{data.frame; clinvaR-processed vcf containing ClinVar data. 
-Defaults to get_test_clinvar().}
+Defaults to get_clinvar().}
 
 \item{ACMG.1000g}{data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
 Defaults to 'extdata/Supplementary_Files/ACMG_1000G.rds'.}
