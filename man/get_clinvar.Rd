@@ -8,7 +8,7 @@ get_clinvar()
 get_clinvar(date)
 }
 \arguments{
-\item{file}{character; input date in the format %y-%m-%d. Ex: 2017-07-05.}
+\item{file}{character; input date in the format \%y-\%m-\%d. Ex: 2017-07-05.}
 }
 \description{
 This function returns the ClinVar version from the date closest to the input date. 

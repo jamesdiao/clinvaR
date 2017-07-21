@@ -3,14 +3,14 @@
 #' This function takes a merged ClinVar-sequencing dataset and 
 #' returns an ancestry-stratified plot of allele frequencies. 
 #' 
-#' @usage merge_clinvar_1000g(clinvar, ACMG.1000g)
+#' @usage merge_clinvar_1000g(clinvar, vcf)
 #' @param clinvar data.frame; clinvaR-processed vcf containing ClinVar data. 
 #' Defaults to get_clinvar().  
 #' @param ACMG.1000g data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
 #' Defaults to 'extdata/Supplementary_Files/ACMG_1000G.rds'. 
 #' @examples 
 #' merge_clinvar_1000g()
-#' merge_clinvar_1000g(clinvar, ACMG.1000g)
+#' merge_clinvar_1000g(clinvar = get_clinvar(), vcf = import_file_1000g())
 #' @export
 
 merge_clinvar_1000g <- function(clinvar, vcf) {
@@ -20,14 +20,14 @@ merge_clinvar_1000g <- function(clinvar, vcf) {
   if (missing(vcf)) {
     vcf <- import_file_1000g()
   }
-  inter <- intersect(clinvar$VAR_ID[clinvar$INTERP], ACMG.1000g$VAR_ID)
+  inter <- intersect(clinvar$VAR_ID[clinvar$pathogenic_incl_conflicts], vcf$VAR_ID)
   clinvar_merged <- clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID)
-  ACMG_merged <- ACMG.1000g[ACMG.1000g$VAR_ID %in% inter,] %>% arrange(VAR_ID)
-  front_cols <- 1:(grep("HG00096",colnames(ACMG.1000g))-1)
+  vcf_merged <- vcf[vcf$VAR_ID %in% inter,] %>% arrange(VAR_ID)
+  front_cols <- 1:(grep("HG00096",colnames(vcf))-1)
   super.levels <- c("AFR", "AMR", "EAS", "EUR", "SAS")
-  ACMG_merged <- cbind(ACMG_merged[,c("GENE",sprintf("AF_1000G%s", c("",paste0("_",super.levels))))], 
-        clinvar_merged,ACMG_merged[,-front_cols])
-  return(ACMG_merged)
+  vcf_merged <- data.frame(vcf_merged[,c("GENE","AF_1000G")], 
+        clinvar_merged,vcf_merged[,-front_cols])
+  return(vcf_merged)
 }
 
 #' Merge ClinVar with ExAC

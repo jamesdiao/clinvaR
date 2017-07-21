@@ -8,7 +8,7 @@ get_date_list()
 get_date_list(date)
 }
 \arguments{
-\item{file}{character; input date in the format %y-%m-%d. Ex: 2017-07-05.}
+\item{file}{character; input date in the format \%y-\%m-\%d. Ex: 2017-07-05.}
 }
 \description{
 This function returns the closest ClinVar date to the input date. 

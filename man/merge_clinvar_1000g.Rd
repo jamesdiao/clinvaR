@@ -4,7 +4,7 @@
 \alias{merge_clinvar_1000g}
 \title{Merge ClinVar with 1000 Genomes}
 \usage{
-merge_clinvar_1000g(clinvar, ACMG.1000g)
+merge_clinvar_1000g(clinvar, vcf)
 }
 \arguments{
 \item{clinvar}{data.frame; clinvaR-processed vcf containing ClinVar data. 
@@ -19,5 +19,5 @@ returns an ancestry-stratified plot of allele frequencies.
 }
 \examples{
 merge_clinvar_1000g()
-merge_clinvar_1000g(clinvar, ACMG.1000g)
+merge_clinvar_1000g(clinvar = get_clinvar(), vcf = import_file_1000g())
 }

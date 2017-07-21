@@ -128,7 +128,7 @@ get_date_list <- function() {
 #' 
 #' @usage get_date_list() 
 #' get_date_list(date)
-#' @param file character; input date in the format %y-%m-%d. Ex: 2017-07-05.  
+#' @param file character; input date in the format \%y-\%m-\%d. Ex: 2017-07-05.  
 #' @export
 
 get_closest_date <- function(date) {
@@ -145,7 +145,7 @@ get_closest_date <- function(date) {
 #' 
 #' @usage get_clinvar()
 #' get_clinvar(date)
-#' @param file character; input date in the format %y-%m-%d. Ex: 2017-07-05.  
+#' @param file character; input date in the format \%y-\%m-\%d. Ex: 2017-07-05.  
 #' @export
 
 get_clinvar <- function(date) {

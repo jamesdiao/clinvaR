@@ -43,7 +43,7 @@ download_1000g <- function(genes, download) {
       # Checks whether the file exists and has non-zero size
       exists <- grepl(sprintf("%s_genotypes_vcf.rds", gene), 
                       system(sprintf("ls %s", dir), intern = T)
-                      ) %>% any
+                      ) %>% any #try file.exists
       file.stat <- unlist(sprintf("stat %s/%s_genotypes_vcf.rds", dir, gene) %>% 
                       system(intern = T) %>% strsplit(" "))
       file.size <- file.stat[grep("Size",file.stat)+1] %>% as.integer
@@ -51,5 +51,21 @@ download_1000g <- function(genes, download) {
     }
     return(c(UCSC,"downloaded" = success))
   })
+  system("rm *.genotypes.vcf.gz.tbi")
   return(download_output)
+}
+
+#' Delete All Downloaded VCF.rds Files
+#'
+#' This function deletes all files generated using download_1000g()
+#' 
+#' @usage delete_downloads()
+#' @export
+#' 
+
+delete_downloads <- function() {
+  dir <- system.file("extdata", package = "clinvaR")
+  contents <- system(sprintf('ls %s/1000G', dir), intern = T)
+  contents <- contents[grepl('_genotypes_vcf.rds', contents)]
+  file.remove(contents)
 }

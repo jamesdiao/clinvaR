@@ -144,15 +144,17 @@ import_file_1000g <- function(genes) {
   header <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", as.character(map$sample))
   combined <- NULL
   for (gene in genes) {
-    if (!any(grepl(gene, system(sprintf('ls %s/1000G', dir), intern = T)))) {
+    exists <- any(grepl(gene, system(sprintf('ls %s/1000G', dir), intern = T)))
+    if (!exists) {
       print(sprintf("ERROR at [%d/%d] %s: VCF file not found", which(gene==genes), length(genes), gene))
       print("Attempting download...")
-      print(ifelse(download_1000g(gene)['downloaded',] %>% unlist, "Success", "Failure"))
-    } else {
+      exists <- download_1000g(gene)['downloaded',] %>% unlist
+      print(ifelse(exists, "SUCCESS", "FAILURE"))
+    } 
+    if (exists) {
       print(sprintf("Importing [%d/%d] %s", which(gene==genes), length(genes), gene))
       combined <- rbind(combined, temp_function(gene))
     }
-    
   }
   combined <- combined[!duplicated(combined$VAR_ID),]
   return(combined)
