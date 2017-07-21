@@ -16,12 +16,12 @@ download_1000g <- function(genes, download) {
   dir <- system.file("extdata", "1000G", package = "clinvaR")
   refGene <- readRDS(sprintf('%s/refGene.rds', dir))
   download_output <- sapply(genes, function(gene) {
+    success <- FALSE
     if (length(genes) > 1) {
       print(sprintf("Downloading [%d/%d] %s", which(gene==genes), length(genes), gene))
     } else {
       print(sprintf("Downloading %s", gene))
     }
-    success <- FALSE
     if (gene %in% refGene$gene) { 
       UCSC <- refGene[refGene$gene == gene, -1]
     } else {
@@ -30,16 +30,18 @@ download_1000g <- function(genes, download) {
     
     if (download) {
       # different version for chromosomes X and Y
-      version <- switch(as.character(UCSC$chrom), "23" = "shapeit2_mvncall_integrated_v1b",
-                        "24" = "integrated_v2a", "shapeit2_mvncall_integrated_v5a")
+      chrom <- UCSC$chrom %>% replace(UCSC$chrom == "23", "X") %>% replace(UCSC$chrom == "24", "Y")
+      version <- switch(as.character(chrom), "X" = "shapeit2_mvncall_integrated_v1b",
+                        "Y" = "integrated_v2a", "shapeit2_mvncall_integrated_v5a")
       file.name <- sprintf(
                       fmt = paste0("ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/",
                              "ALL.%s.phase3_%s.20130502.genotypes.vcf.gz"), 
-                      paste0('chr', UCSC$chrom), version
+                      paste0('chr', chrom), version
                    )
       output <- tabix.read(tabixFile = file.name, 
-                           tabixRange = sprintf('%s:%s-%s', UCSC$chrom, UCSC$start, UCSC$end)
+                           tabixRange = sprintf('%s:%s-%s', chrom, UCSC$start, UCSC$end)
                            )
+      system("rm *.genotypes.vcf.gz.tbi")
       output <- read.table(text = paste(output, collapse = "\n"), header = F, stringsAsFactors = F, 
                           comment.char = "", quote = "", sep = "\t")
       saveRDS(output, sprintf('%s/%s_genotypes_vcf.rds', dir, gene))
@@ -48,14 +50,11 @@ download_1000g <- function(genes, download) {
       exists <- grepl(sprintf("%s_genotypes_vcf.rds", gene), 
                       system(sprintf("ls %s", dir), intern = T)
                       ) %>% any #try file.exists
-      file.stat <- unlist(sprintf("stat %s/%s_genotypes_vcf.rds", dir, gene) %>% 
-                      system(intern = T) %>% strsplit(" "))
-      file.size <- file.stat[grep("Size",file.stat)+1] %>% as.integer
-      success <- exists & file.size > 0
+      path <- sprintf("%s/%s_genotypes_vcf.rds", dir, gene)
+      success <- file.exists(path) & (file.size(path) > 0)
     }
     return(c(UCSC,"downloaded" = success))
   })
-  system("rm *.genotypes.vcf.gz.tbi")
   return(download_output)
 }
 

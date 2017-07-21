@@ -5,7 +5,7 @@
 \title{Get Closest ClinVar Version Dates}
 \usage{
 get_date_list() 
-get_date_list(date)
+get_date_list(dates)
 }
 \arguments{
 \item{file}{character; input date in the format \%y-\%m-\%d. Ex: 2017-07-05.}

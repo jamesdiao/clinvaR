@@ -78,7 +78,7 @@ import_file_1000g <- function(genes) {
   for (gene in genes) {
     exists <- any(grepl(gene, system(sprintf('ls %s/1000G', dir), intern = T)))
     if (!exists) {
-      print(sprintf("ERROR at [%d/%d] %s: VCF file not found", which(gene==genes), length(genes), gene))
+      print(sprintf("Warning at %s: VCF file not found", which(gene==genes), length(genes), gene))
       exists <- download_1000g(gene)['downloaded',] %>% unlist
       print(ifelse(exists, "SUCCESS", "FAILURE"))
     } 

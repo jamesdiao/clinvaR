@@ -1,17 +1,12 @@
 ---
-title: "clinvaR Vignette"
-author: "James Diao, under the supervision of Arjun Manrai"
-date: "July 21, 2017"
-output:
-  html_document:
-    code_folding: show
-    number_sections: no
-    toc: yes
-  html_notebook: default
-  pdf_document:
-    number_sections: yes
-    toc: yes
-geometry: margin=1in
+title: "clinvaR vignette"
+author: "James Diao"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = F}
@@ -19,28 +14,31 @@ knitr::opts_knit$set(root.dir = ".");
 knitr::opts_chunk$set(echo = T, eval = T, cache = F, warning = F, message = F)
 ```
 
-# Introduction
 This is a vignette intended to introduce new users to `clinvaR` ([https://github.com/jamesdiao/clinvaR](https://github.com/jamesdiao/clinvaR)). 
 
+## Dependencies
+
 clinvaR has a number of file dependencies that are generally useful for these types of projects. I have attached them here. 
-```{r}
+```{r, echo = F}
 pkg_list <- c("remotes","pander","ggplot2","tibble","tidyr","dplyr", "stringr")
 installed <- installed.packages()[,"Package"]
 is.installed <- pkg_list %in% installed
 if (!all(is.installed))
   install.packages(pkg_list[!is.installed])
-sapply(pkg_list, require, character.only = T)
+print(names(sapply(pkg_list, require, character.only = T)), quote = F)
 if (!("clinvaR" %in% installed))
   remotes::install_github('jamesdiao/clinvaR')
 require(clinvaR)
 ```
 
+## Purpose
 For `clinvaR`, the first goal is to go from genes to a vcf of related variants, along with classifications from any version of ClinVar.  
 This involves 3 steps:  
 
 1. Select a list of genes that you are interested in. clinvaR makes it easy to download and import relevant variants from 1KG.  
 2. Select a version of ClinVar to assign pathogenicity labels with. All previous ClinVar VCFs are stored as binary files and can be retrieved with a "closest date" function.  
 3. Select an analysis method. This part is not ready yet.  
+
 
 ## Select a List of Genes
 
@@ -117,6 +115,8 @@ Then, you can download variants of interest from 1000 Genomes
 #final_vcf <- import_file_1000g(genes = gene_panel)
 ```
 
+
+
 ## Import ClinVar VCF
 
 This must be merged with some version of ClinVar. This can be done either using the latest saved version (July 5, 2017), or by specifying a date from the list. 
@@ -141,31 +141,21 @@ clinvar[1:5,] %>% select(-CLNDBN)
 
 Then, we merge clinvar with the genes of interest. 
 
-```{r}
-#merged_1000g <- merge_clinvar_1000g(clinvar = get_clinvar(Sys.Date()), 
-#                    vcf = import_file_1000g(gene_panel))
-#merged_1000g[1:5,1:5]
+```{r, cache = T}
+merged_1000g <- merge_clinvar_1000g(clinvar = get_clinvar(Sys.Date()), 
+                    vcf = import_file_1000g(gene_panel))
+merged_1000g[1:5,1:5]
 ```
 
 We can also slice clinvar itself to collect only relevant entries. 
-
 ```{r}
 #clinvar$CHROM %>% paste0(str_pad(clinvar$POS, 10, side = 'left', pad = "0")) %>% as.numeric %>% 
 #  between(start, stop) -> filter_condition
 #clinvar <- filter(clinvar, filter_condition)
 ```
 
+Also a quote using `>`:
 
+> "He who gives up [code] safety for [code] speed deserves neither."
 
-```{r, eval = F, echo = F}
-# One entry per gene. Start/end refer to transcription regions. When multiple exist, the longest region is taken. 
-query <- connect_UCSC()
-UCSC <- query('select * from refGene') %>% select(gene = name2, name, chrom, start = txStart, end = txEnd)
-chr <- gsub("chr(.*)", "\\1", UCSC$chrom)
-UCSC$chrom <- chr %>% replace(chr=="X", 23) %>% replace(chr=="Y", 24)
-UCSC <- UCSC %>% filter(chr %in% c(1:22, "X","Y")) %>% 
-  mutate(chrom = as.integer(chrom)) %>% 
-  arrange(desc(end-start), gene, start) %>% 
-  filter(!duplicated(gene)) %>% 
-  arrange(chrom, gene)
-```
+([via](https://twitter.com/hadleywickham/status/504368538874703872))

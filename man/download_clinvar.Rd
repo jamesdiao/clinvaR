@@ -20,6 +20,6 @@ Specifying a file path will collect the VCF from that path instead.
 }
 \examples{
 clinvar <- sprintf("ClinVar_Reports/VCF/clinvar_\%s.vcf.gz", clinvar_date) \%>\% 
-              download_clinvar(clinvar_file)
+              download_clinvar(file)
 clinvar <- clinvar[!duplicated(clinvar$VAR_ID),] # remove duplicates
 }

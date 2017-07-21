@@ -8,41 +8,42 @@
 #' @examples var_plot_1000g(pathogenic = T, frac = T)
 #' @export
 
-var_plot_1000g <- function(clinvar, ACMG.1000g, pathogenic, frac) {
-  if (missing(clinvar)) {
-    clinvar <- get_test_clinvar()
+var_plot_1000g <- function(clinvar, vcf, genes, pathogenic, frac) {
+  if (missing(vcf) & missing(genes)) {
+    stop('Input either VCF from import_file_1000g() or a gene list.')
   }
-  if (missing(ACMG.1000g)) {
-    system.file("extdata", "Supplementary_Files/ACMG_1000G.rds", package = "clinvaR") %>% 
-      readRDS -> ACMG.1000g
+  if (missing(pathogenic)) pathogenic <- TRUE
+  if (missing(frac)) frac <- TRUE
+  if (pathogenic){
+    if (missing(clinvar)) {
+      clinvar <- get_clinvar()
+    }
+    use_vcf <- merge_clinvar_1000g(clinvar, vcf)
+  } else {
+    use_vcf <- vcf
+  }
+  if (missing(vcf)) {
+    vcf <- import_file_1000g(genes)
   }
   map <- system.file("extdata", "Supplementary_Files/phase3map.txt", package = "clinvaR") %>% 
     read.table(stringsAsFactors = F, header = T) %>% as.data.frame
   pop.levels <- c("ACB", "ASW", "ESN", "GWD", "LWK", "MSL", "YRI", "CLM", "MXL", 
                   "PEL", "PUR", "CDX", "CHB", "CHS", "JPT", "KHV", "CEU", "FIN", 
                   "GBR", "IBS", "TSI", "BEB", "GIH", "ITU", "PJL", "STU")
-  if (pathogenic){
-    merged_1000g <- merge_clinvar_1000g(clinvar, ACMG.1000g)
-    KP <- sapply(merged_1000g$CLNSIG, function(x) 5 %in% x)
-    KP_only <- c("RET","PRKAG2","MYH7","TNNI3","TPM1","MYL3","CACNA1S",
-                 "DSP","MYL2","APOB","PCSK9","RYR1","RYR2","SDHAF2","ACTC1")
-    ACMG.data <- merged_1000g[!((merged_1000g$GENE %in% KP_only) & (!KP)),]
-  } else {
-    ACMG.data <- ACMG.1000g
-  }
-  front_cols <- 1:(grep("HG00096",colnames(ACMG.data))-1)
-  recessive <- ACMG.data$GENE %in% c("MUTYH","ATP7B")
+
+  front_cols <- 1:(grep("HG00096",colnames(use_vcf))-1)
+  #recessive <- use_vcf$GENE %in% c("MUTYH","ATP7B")
   sapply(pop.levels, function(pop) {
     keep <- c(front_cols,map$pop)==pop
     if (frac) {
-      temp <- (colSums(ACMG.data[!recessive,keep])>0) + 
-        (colSums(ACMG.data[ recessive,keep])>1)
+      #temp <- (colSums(use_vcf[!recessive,keep])>0) + 
+      temp <- colSums(use_vcf[,keep]) > 0
     } else {
       #Counts the number of non-reference sites in a gene
-      temp <- colSums(ACMG.data[,keep]>0)
+      temp <- colSums(use_vcf[,keep] > 0)
     }
     c(mean(temp), sd(temp))
-  }) %>% t %>% tbl_df -> values #Number of non-reference sites across the different populations
+  }) %>% t %>% as.data.frame() -> values #Number of non-reference sites across the different populations
   #colnames(values) <- c("Mean","SD")
   #values$Population <- factor(pop.levels, levels = pop.levels)
   #values$Superpopulation <- factor(super[pop.levels], levels = super.levels)

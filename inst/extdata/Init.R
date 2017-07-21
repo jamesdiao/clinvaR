@@ -7,3 +7,4 @@ document()
 setwd('..')
 install('clinvaR')
 require(clinvaR)
+
