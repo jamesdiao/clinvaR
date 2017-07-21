@@ -6,8 +6,8 @@
 #' @usage merge_clinvar_1000g(clinvar, vcf)
 #' @param clinvar data.frame; clinvaR-processed vcf containing ClinVar data. 
 #' Defaults to get_clinvar().  
-#' @param ACMG.1000g data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
-#' Defaults to 'extdata/Supplementary_Files/ACMG_1000G.rds'. 
+#' @param vcf data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
+#' Defaults to importing data from all downloads: vcf <- import_file_1000g(). 
 #' @examples 
 #' merge_clinvar_1000g()
 #' merge_clinvar_1000g(clinvar = get_clinvar(), vcf = import_file_1000g())
@@ -24,7 +24,6 @@ merge_clinvar_1000g <- function(clinvar, vcf) {
   clinvar_merged <- clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID)
   vcf_merged <- vcf[vcf$VAR_ID %in% inter,] %>% arrange(VAR_ID)
   front_cols <- 1:(grep("HG00096",colnames(vcf))-1)
-  super.levels <- c("AFR", "AMR", "EAS", "EUR", "SAS")
   vcf_merged <- data.frame(vcf_merged[,c("GENE","AF_1000G")], 
         clinvar_merged,vcf_merged[,-front_cols])
   return(vcf_merged)
@@ -41,11 +40,11 @@ merge_clinvar_1000g <- function(clinvar, vcf) {
 #' Defaults to 'extdata/Supplementary_Files/ACMG_EXAC.rds'. 
 #' @examples merge_clinvar_exac()
 #' merge_clinvar_exac(clinvar, ACMG.exac)
-#' @export
+#' #@export
 
 merge_clinvar_exac <- function(clinvar, ACMG.exac) {
   if (missing(clinvar)) {
-    clinvar <- get_test_clinvar()
+    clinvar <- get_clinvar()
   }
   if (missing(ACMG.exac)) {
     system.file("extdata", "Supplementary_Files/ACMG_EXAC.rds", package = "clinvaR") %>% 
@@ -72,11 +71,11 @@ merge_clinvar_exac <- function(clinvar, ACMG.exac) {
 #' Defaults to 'extdata/Supplementary_Files/ACMG_GNOMAD.rds'. 
 #' @examples merge_clinvar_gnomad()
 #' merge_clinvar_gnomad(clinvar, ACMG.gnomad)
-#' @export
+#' #@export
 
 merge_clinvar_gnomad <- function(clinvar, ACMG.gnomad) {
   if (missing(clinvar)) {
-    clinvar <- get_test_clinvar()
+    clinvar <- get_clinvar()
   }
   if (missing(ACMG.gnomad)) {
     system.file("extdata", "Supplementary_Files/ACMG_GNOMAD.rds", package = "clinvaR") %>% 

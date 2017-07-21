@@ -1,39 +1,110 @@
 Name	Size	Last Modified	Last Modified
-archive		5/12/17	3:51:00 PM
-clinvar.vcf.gz		7/6/17	6:33:00 PM
-clinvar.vcf.gz.md5		7/6/17	6:33:00 PM
-clinvar.vcf.gz.tbi		7/6/17	6:33:00 PM
-File:clinvar_20170705.vcf.gz	15060 KB	7/6/17	6:33:00 PM
-File:clinvar_20170705.vcf.gz.md5	1 KB	7/6/17	6:33:00 PM
-File:clinvar_20170705.vcf.gz.tbi	155 KB	7/6/17	6:33:00 PM
-File:clinvar_20170705_papu.vcf.gz	863 KB	7/6/17	6:33:00 PM
-File:clinvar_20170705_papu.vcf.gz.md5	1 KB	7/6/17	6:33:00 PM
-File:clinvar_20170705_papu.vcf.gz.tbi	10 KB	7/6/17	6:33:00 PM
-clinvar_papu.vcf.gz		7/6/17	6:33:00 PM
-clinvar_papu.vcf.gz.md5		7/6/17	6:33:00 PM
-clinvar_papu.vcf.gz.tbi		7/6/17	6:33:00 PM
-common_and_clinical.vcf.gz		7/6/17	6:33:00 PM
-common_and_clinical.vcf.gz.md5		7/6/17	6:33:00 PM
-common_and_clinical.vcf.gz.tbi		7/6/17	6:33:00 PM
-File:common_and_clinical_20170705.vcf.gz	325 KB	7/6/17	6:33:00 PM
-File:common_and_clinical_20170705.vcf.gz.md5	1 KB	7/6/17	6:33:00 PM
-File:common_and_clinical_20170705.vcf.gz.tbi	39 KB	7/6/17	6:33:00 PM
-File:common_and_clinical_20170705_papu.vcf.gz	3 KB	7/6/17	6:33:00 PM
-File:common_and_clinical_20170705_papu.vcf.gz.md5	1 KB	7/6/17	6:33:00 PM
-File:common_and_clinical_20170705_papu.vcf.gz.tbi	1 KB	7/6/17	6:33:00 PM
-common_and_clinical_papu.vcf.gz		7/6/17	6:33:00 PM
-common_and_clinical_papu.vcf.gz.md5		7/6/17	6:33:00 PM
-common_and_clinical_papu.vcf.gz.tbi		7/6/17	6:33:00 PM
-common_no_known_medical_impact.vcf.gz		7/6/17	6:33:00 PM
-common_no_known_medical_impact.vcf.gz.md5		7/6/17	6:33:00 PM
-common_no_known_medical_impact.vcf.gz.tbi		7/6/17	6:33:00 PM
-File:common_no_known_medical_impact_20170705.vcf.gz	1218806 KB	7/6/17	6:33:00 PM
-File:common_no_known_medical_impact_20170705.vcf.gz.md5	1 KB	7/6/17	6:33:00 PM
-File:common_no_known_medical_impact_20170705.vcf.gz.tbi	2142 KB	7/6/17	6:33:00 PM
-File:common_no_known_medical_impact_20170705_papu.vcf.gz	3 KB	7/6/17	6:33:00 PM
-File:common_no_known_medical_impact_20170705_papu.vcf.gz.md5	1 KB	7/6/17	6:33:00 PM
-File:common_no_known_medical_impact_20170705_papu.vcf.gz.tbi	1 KB	7/6/17	6:33:00 PM
-common_no_known_medical_impact_papu.vcf.gz		7/6/17	6:33:00 PM
-common_no_known_medical_impact_papu.vcf.gz.md5		7/6/17	6:33:00 PM
-common_no_known_medical_impact_papu.vcf.gz.tbi		7/6/17	6:33:00 PM
-vcf_2.0		7/10/17	1:23:00 PM
+File:clinvar_20170104.vcf.gz	12894 KB	1/6/17	12:00:00 AM
+File:clinvar_20170104.vcf.gz.md5	1 KB	1/6/17	12:00:00 AM
+File:clinvar_20170104.vcf.gz.tbi	140 KB	1/6/17	12:00:00 AM
+File:clinvar_20170104_papu.vcf.gz	746 KB	1/6/17	12:00:00 AM
+File:clinvar_20170104_papu.vcf.gz.md5	1 KB	1/6/17	12:00:00 AM
+File:clinvar_20170104_papu.vcf.gz.tbi	9 KB	1/6/17	12:00:00 AM
+File:clinvar_20170130.vcf.gz	13229 KB	2/7/17	10:53:00 PM
+File:clinvar_20170130.vcf.gz.md5	1 KB	2/7/17	10:54:00 PM
+File:clinvar_20170130.vcf.gz.tbi	141 KB	2/7/17	10:53:00 PM
+File:clinvar_20170130_papu.vcf.gz	767 KB	2/7/17	10:54:00 PM
+File:clinvar_20170130_papu.vcf.gz.md5	1 KB	2/7/17	10:54:00 PM
+File:clinvar_20170130_papu.vcf.gz.tbi	9 KB	2/7/17	10:54:00 PM
+File:clinvar_20170228.vcf.gz	13314 KB	3/2/17	5:34:00 PM
+File:clinvar_20170228.vcf.gz.md5	1 KB	3/2/17	5:36:00 PM
+File:clinvar_20170228.vcf.gz.tbi	143 KB	3/2/17	5:34:00 PM
+File:clinvar_20170228_papu.vcf.gz	773 KB	3/2/17	5:36:00 PM
+File:clinvar_20170228_papu.vcf.gz.md5	1 KB	3/2/17	5:36:00 PM
+File:clinvar_20170228_papu.vcf.gz.tbi	9 KB	3/2/17	5:36:00 PM
+File:clinvar_20170228_updated.vcf.gz	12017 KB	4/13/17	6:19:00 PM
+File:clinvar_20170404.vcf.gz	13365 KB	4/6/17	1:40:00 PM
+File:clinvar_20170404.vcf.gz.md5	1 KB	4/6/17	1:41:00 PM
+File:clinvar_20170404.vcf.gz.tbi	146 KB	4/6/17	1:40:00 PM
+File:clinvar_20170404_papu.vcf.gz	793 KB	4/6/17	1:41:00 PM
+File:clinvar_20170404_papu.vcf.gz.md5	1 KB	4/6/17	1:41:00 PM
+File:clinvar_20170404_papu.vcf.gz.tbi	9 KB	4/6/17	1:41:00 PM
+File:clinvar_20170501.vcf.gz	14203 KB	5/12/17	3:29:00 PM
+File:clinvar_20170501.vcf.gz.md5	1 KB	5/12/17	3:30:00 PM
+File:clinvar_20170501.vcf.gz.tbi	152 KB	5/12/17	3:29:00 PM
+File:clinvar_20170501_papu.vcf.gz	827 KB	5/12/17	3:30:00 PM
+File:clinvar_20170501_papu.vcf.gz.md5	1 KB	5/12/17	3:31:00 PM
+File:clinvar_20170501_papu.vcf.gz.tbi	10 KB	5/12/17	3:30:00 PM
+File:clinvar_20170530.vcf.gz	14778 KB	6/1/17	2:53:00 PM
+File:clinvar_20170530.vcf.gz.md5	1 KB	6/1/17	2:54:00 PM
+File:clinvar_20170530.vcf.gz.tbi	154 KB	6/1/17	2:53:00 PM
+File:clinvar_20170530_papu.vcf.gz	849 KB	6/1/17	2:54:00 PM
+File:clinvar_20170530_papu.vcf.gz.md5	1 KB	6/1/17	2:54:00 PM
+File:clinvar_20170530_papu.vcf.gz.tbi	10 KB	6/1/17	2:54:00 PM
+File:common_and_clinical_20170104.vcf.gz	222 KB	1/6/17	12:00:00 AM
+File:common_and_clinical_20170104.vcf.gz.md5	1 KB	1/6/17	12:00:00 AM
+File:common_and_clinical_20170104.vcf.gz.tbi	34 KB	1/6/17	12:00:00 AM
+File:common_and_clinical_20170104_papu.vcf.gz	3 KB	1/6/17	12:00:00 AM
+File:common_and_clinical_20170104_papu.vcf.gz.md5	1 KB	1/6/17	12:00:00 AM
+File:common_and_clinical_20170104_papu.vcf.gz.tbi	1 KB	1/6/17	12:00:00 AM
+File:common_and_clinical_20170130.vcf.gz	225 KB	2/7/17	10:53:00 PM
+File:common_and_clinical_20170130.vcf.gz.md5	1 KB	2/7/17	10:54:00 PM
+File:common_and_clinical_20170130.vcf.gz.tbi	34 KB	2/7/17	10:53:00 PM
+File:common_and_clinical_20170130_papu.vcf.gz	3 KB	2/7/17	10:54:00 PM
+File:common_and_clinical_20170130_papu.vcf.gz.md5	1 KB	2/7/17	10:54:00 PM
+File:common_and_clinical_20170130_papu.vcf.gz.tbi	1 KB	2/7/17	10:54:00 PM
+File:common_and_clinical_20170228.vcf.gz	226 KB	3/2/17	5:34:00 PM
+File:common_and_clinical_20170228.vcf.gz.md5	1 KB	3/2/17	5:36:00 PM
+File:common_and_clinical_20170228.vcf.gz.tbi	34 KB	3/2/17	5:34:00 PM
+File:common_and_clinical_20170228_papu.vcf.gz	3 KB	3/2/17	5:36:00 PM
+File:common_and_clinical_20170228_papu.vcf.gz.md5	1 KB	3/2/17	5:36:00 PM
+File:common_and_clinical_20170228_papu.vcf.gz.tbi	1 KB	3/2/17	5:36:00 PM
+File:common_and_clinical_20170404.vcf.gz	303 KB	4/6/17	1:40:00 PM
+File:common_and_clinical_20170404.vcf.gz.md5	1 KB	4/6/17	1:41:00 PM
+File:common_and_clinical_20170404.vcf.gz.tbi	37 KB	4/6/17	1:40:00 PM
+File:common_and_clinical_20170404_papu.vcf.gz	3 KB	4/6/17	1:41:00 PM
+File:common_and_clinical_20170404_papu.vcf.gz.md5	1 KB	4/6/17	1:41:00 PM
+File:common_and_clinical_20170404_papu.vcf.gz.tbi	1 KB	4/6/17	1:41:00 PM
+File:common_and_clinical_20170501.vcf.gz	321 KB	5/12/17	3:29:00 PM
+File:common_and_clinical_20170501.vcf.gz.md5	1 KB	5/12/17	3:30:00 PM
+File:common_and_clinical_20170501.vcf.gz.tbi	38 KB	5/12/17	3:29:00 PM
+File:common_and_clinical_20170501_papu.vcf.gz	3 KB	5/12/17	3:30:00 PM
+File:common_and_clinical_20170501_papu.vcf.gz.md5	1 KB	5/12/17	3:31:00 PM
+File:common_and_clinical_20170501_papu.vcf.gz.tbi	1 KB	5/12/17	3:30:00 PM
+File:common_and_clinical_20170530.vcf.gz	324 KB	6/1/17	2:53:00 PM
+File:common_and_clinical_20170530.vcf.gz.md5	1 KB	6/1/17	2:54:00 PM
+File:common_and_clinical_20170530.vcf.gz.tbi	38 KB	6/1/17	2:53:00 PM
+File:common_and_clinical_20170530_papu.vcf.gz	3 KB	6/1/17	2:54:00 PM
+File:common_and_clinical_20170530_papu.vcf.gz.md5	1 KB	6/1/17	2:54:00 PM
+File:common_and_clinical_20170530_papu.vcf.gz.tbi	1 KB	6/1/17	2:54:00 PM
+File:common_no_known_medical_impact_20170104.vcf.gz	997841 KB	1/6/17	12:00:00 AM
+File:common_no_known_medical_impact_20170104.vcf.gz.md5	1 KB	1/6/17	12:00:00 AM
+File:common_no_known_medical_impact_20170104.vcf.gz.tbi	2092 KB	1/6/17	12:00:00 AM
+File:common_no_known_medical_impact_20170104_papu.vcf.gz	3 KB	1/6/17	12:00:00 AM
+File:common_no_known_medical_impact_20170104_papu.vcf.gz.md5	1 KB	1/6/17	12:00:00 AM
+File:common_no_known_medical_impact_20170104_papu.vcf.gz.tbi	1 KB	1/6/17	12:00:00 AM
+File:common_no_known_medical_impact_20170130.vcf.gz	997827 KB	2/7/17	10:54:00 PM
+File:common_no_known_medical_impact_20170130.vcf.gz.md5	1 KB	2/7/17	10:54:00 PM
+File:common_no_known_medical_impact_20170130.vcf.gz.tbi	2092 KB	2/7/17	10:54:00 PM
+File:common_no_known_medical_impact_20170130_papu.vcf.gz	3 KB	2/7/17	10:54:00 PM
+File:common_no_known_medical_impact_20170130_papu.vcf.gz.md5	1 KB	2/7/17	10:54:00 PM
+File:common_no_known_medical_impact_20170130_papu.vcf.gz.tbi	1 KB	2/7/17	10:54:00 PM
+File:common_no_known_medical_impact_20170228.vcf.gz	997805 KB	3/2/17	5:36:00 PM
+File:common_no_known_medical_impact_20170228.vcf.gz.md5	1 KB	3/2/17	5:36:00 PM
+File:common_no_known_medical_impact_20170228.vcf.gz.tbi	2092 KB	3/2/17	5:36:00 PM
+File:common_no_known_medical_impact_20170228_papu.vcf.gz	3 KB	3/2/17	5:36:00 PM
+File:common_no_known_medical_impact_20170228_papu.vcf.gz.md5	1 KB	3/2/17	5:36:00 PM
+File:common_no_known_medical_impact_20170228_papu.vcf.gz.tbi	1 KB	3/2/17	5:36:00 PM
+File:common_no_known_medical_impact_20170404.vcf.gz	1218825 KB	4/6/17	1:40:00 PM
+File:common_no_known_medical_impact_20170404.vcf.gz.md5	1 KB	4/6/17	1:41:00 PM
+File:common_no_known_medical_impact_20170404.vcf.gz.tbi	2142 KB	4/6/17	1:41:00 PM
+File:common_no_known_medical_impact_20170404_papu.vcf.gz	3 KB	4/6/17	1:41:00 PM
+File:common_no_known_medical_impact_20170404_papu.vcf.gz.md5	1 KB	4/6/17	1:41:00 PM
+File:common_no_known_medical_impact_20170404_papu.vcf.gz.tbi	1 KB	4/6/17	1:41:00 PM
+File:common_no_known_medical_impact_20170501.vcf.gz	1218784 KB	5/12/17	3:30:00 PM
+File:common_no_known_medical_impact_20170501.vcf.gz.md5	1 KB	5/12/17	3:30:00 PM
+File:common_no_known_medical_impact_20170501.vcf.gz.tbi	2142 KB	5/12/17	3:30:00 PM
+File:common_no_known_medical_impact_20170501_papu.vcf.gz	3 KB	5/12/17	3:30:00 PM
+File:common_no_known_medical_impact_20170501_papu.vcf.gz.md5	1 KB	5/12/17	3:31:00 PM
+File:common_no_known_medical_impact_20170501_papu.vcf.gz.tbi	1 KB	5/12/17	3:30:00 PM
+File:common_no_known_medical_impact_20170530.vcf.gz	1218796 KB	6/1/17	2:54:00 PM
+File:common_no_known_medical_impact_20170530.vcf.gz.md5	1 KB	6/1/17	2:54:00 PM
+File:common_no_known_medical_impact_20170530.vcf.gz.tbi	2142 KB	6/1/17	2:54:00 PM
+File:common_no_known_medical_impact_20170530_papu.vcf.gz	3 KB	6/1/17	2:54:00 PM
+File:common_no_known_medical_impact_20170530_papu.vcf.gz.md5	1 KB	6/1/17	2:54:00 PM
+File:common_no_known_medical_impact_20170530_papu.vcf.gz.tbi	1 KB	6/1/17	2:54:00 PM

@@ -20,4 +20,5 @@ returns an ancestry-stratified plot of allele frequencies
 \examples{
 merge_clinvar_gnomad()
 merge_clinvar_gnomad(clinvar, ACMG.gnomad)
+#@export
 }

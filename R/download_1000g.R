@@ -16,7 +16,11 @@ download_1000g <- function(genes, download) {
   dir <- system.file("extdata", "1000G", package = "clinvaR")
   refGene <- readRDS(sprintf('%s/refGene.rds', dir))
   download_output <- sapply(genes, function(gene) {
-    print(sprintf("Downloading [%d/%d] %s", which(gene==genes), length(genes), gene))
+    if (length(genes) > 1) {
+      print(sprintf("Downloading [%d/%d] %s", which(gene==genes), length(genes), gene))
+    } else {
+      print(sprintf("Downloading %s", gene))
+    }
     success <- FALSE
     if (gene %in% refGene$gene) { 
       UCSC <- refGene[refGene$gene == gene, -1]

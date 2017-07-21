@@ -10,8 +10,8 @@ merge_clinvar_1000g(clinvar, vcf)
 \item{clinvar}{data.frame; clinvaR-processed vcf containing ClinVar data. 
 Defaults to get_clinvar().}
 
-\item{ACMG.1000g}{data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
-Defaults to 'extdata/Supplementary_Files/ACMG_1000G.rds'.}
+\item{vcf}{data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
+Defaults to importing data from all downloads: vcf <- import_file_1000g().}
 }
 \description{
 This function takes a merged ClinVar-sequencing dataset and 

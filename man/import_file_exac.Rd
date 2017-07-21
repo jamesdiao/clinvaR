@@ -28,4 +28,5 @@ for (gene in ACMG.panel) {
 }
 ACMG.exac <- ACMG.exac[!duplicated(ACMG.exac$VAR_ID),]
 ACMG.gnomad <- ACMG.gnomad[!duplicated(ACMG.gnomad$VAR_ID),]
+#@export
 }
