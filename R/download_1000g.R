@@ -41,7 +41,7 @@ download_1000g <- function(genes, download) {
       saveRDS(output, sprintf('%s/%s_genotypes_vcf.rds', dir, gene))
       
       # Checks whether the file exists and has non-zero size
-      exists <- grepl(sprintf("%s/%s_genotypes_vcf.rds", dir, gene), 
+      exists <- grepl(sprintf("%s_genotypes_vcf.rds", gene), 
                       system(sprintf("ls %s", dir), intern = T)
                       ) %>% any
       file.stat <- unlist(sprintf("stat %s/%s_genotypes_vcf.rds", dir, gene) %>% 
