@@ -142,8 +142,9 @@ clinvar[1:5,] %>% select(-CLNDBN)
 Then, we merge clinvar with the genes of interest. 
 
 ```{r}
-merge_clinvar_1000g(clinvar = get_clinvar(Sys.Date()), 
-                    vcf = import_file_1000g(gene_panel))
+#merged_1000g <- merge_clinvar_1000g(clinvar = get_clinvar(Sys.Date()), 
+#                    vcf = import_file_1000g(gene_panel))
+#merged_1000g[1:5,1:5]
 ```
 
 We can also slice clinvar itself to collect only relevant entries. 
