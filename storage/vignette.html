@@ -122,16 +122,14 @@ $(document).ready(function () {
 
 <p>This is a vignette intended to introduce new users to <a href="https://github.com/jamesdiao/clinvaR">clinvaR</a>.</p>
 <p>The first step is to have a list of genes that you are interested in. The easiest way is to directly save your genes of interest in gene_panel as a character vector (all caps):</p>
-<pre class="r"><code>pkg_list &lt;- c(&quot;scrapeR&quot;,&quot;RMySQL&quot;, &quot;knitr&quot;,&quot;pander&quot;,&quot;ggplot2&quot;,&quot;clinvaR&quot;,
-              &quot;ggrepel&quot;, &quot;tibble&quot;,&quot;curl&quot;,&quot;tidyr&quot;,&quot;dplyr&quot;, &quot;stringr&quot;)
+<pre class="r"><code>pkg_list &lt;- c(&quot;knitr&quot;,&quot;pander&quot;,&quot;ggplot2&quot;,&quot;clinvaR&quot;,
+              &quot;tibble&quot;,&quot;curl&quot;,&quot;tidyr&quot;,&quot;dplyr&quot;, &quot;stringr&quot;)
 installed &lt;- pkg_list %in% installed.packages()[,&quot;Package&quot;]
 if (!all(installed))
   install.packages(pkg_list[!installed])
 sapply(pkg_list, require, character.only = T)</code></pre>
-<pre><code>## scrapeR  RMySQL   knitr  pander ggplot2 clinvaR ggrepel  tibble    curl 
-##    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE 
-##   tidyr   dplyr stringr 
-##    TRUE    TRUE    TRUE</code></pre>
+<pre><code>##   knitr  pander ggplot2 clinvaR  tibble    curl   tidyr   dplyr stringr 
+##    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE</code></pre>
 <pre class="r"><code>gene_panel &lt;- c('GENE1', 'GENE2', 'GENE3')</code></pre>
 <p>Another way is to save your gene list in a text file (1 gene per line) and import it.</p>
 <p>The MacArthur Lab has assembled a compilation of gene lists (<a href="https://github.com/macarthur-lab/gene_lists" class="uri">https://github.com/macarthur-lab/gene_lists</a>) that may be a useful starting point. We have included all sets with abbreviated descriptions. Please visit the GitHub repo for citation information.</p>
@@ -310,12 +308,51 @@ sapply(pkg_list, require, character.only = T)</code></pre>
 gene_panel &lt;- import_gene_file('x-linked_clinvar.tsv')
 gene_panel[1:5]</code></pre>
 <pre><code>## [1] &quot;ABCD1&quot; &quot;AIFM1&quot; &quot;ANOS1&quot; &quot;ARSE&quot;  &quot;ARX&quot;</code></pre>
-<p>The last way is to search omim for related genes.</p>
+<p>The last way is to search OMIM for related genes.</p>
 <pre class="r"><code>#omim_table &lt;- read.table('clinvaR/storage/gene_lists/other_data/omim.full.tsv', 
 #                         sep = '\t', fill = T, header = T)
 #search_terms &lt;- c(&quot;Cardiomyopathy&quot;)</code></pre>
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Cmd+Option+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Cmd+Shift+K</em> to preview the HTML file).</p>
+<p>Then, you can download variants of interest from 1000 Genomes</p>
+<pre class="r"><code>#download_output &lt;- download_1000g(genes = gene_panel)
+#final_vcf &lt;- import_file_1000g(genes = gene_panel)</code></pre>
+<p>This must be merged with some version of ClinVar. This can be done either using the latest saved version (July 5, 2017), or by specifying a date from the list.</p>
+<pre class="r"><code>require(stringr)
+setwd('/Users/jamesdiao/Documents/Kohane_Lab/clinvaR/inst/extdata')
+get_date_list &lt;- function() {
+  clinvar_reports &lt;- system(&quot;ls Archive_Tables&quot;, intern = T)
+  clinvar_reports &lt;- clinvar_reports[grep(&quot;.tsv&quot;,clinvar_reports)]
+  do.call(&quot;rbind&quot;, lapply(clinvar_reports, function(tsv) {
+    read.table(file = sprintf(&quot;Archive_Tables/%s&quot;, tsv), sep = &quot;\t&quot;, 
+               header = T, stringsAsFactors = F)
+  })) -&gt; archive
+  regmatches(archive$Name,regexpr(&quot;^File:clinvar_(20.{6})\\.vcf\\.gz$&quot;,archive$Name)) %&gt;% 
+    str_extract(&quot;20.{6}&quot;) %&gt;% as.Date(format = &quot;%Y%m%d&quot;) %&gt;% unique()
+}
+all_dates &lt;- get_date_list()
+
+get_dates &lt;- function(date_list, range) {
+  date_list &lt;- date_list %&gt;% as.Date()
+  if (!exists(&quot;all_dates&quot;))
+    all_dates &lt;- get_date_list()
+  if (range) {
+    keep &lt;- between(all_dates, min(date_list), max(date_list))
+  } else {
+    keep &lt;- all_dates %in% date_list
+  }
+  all_dates[keep] %&gt;% as.character()
+}
+clinvar &lt;- get_test_clinvar()
+clinvar[1:5,1:5]</code></pre>
+<pre><code>##         VAR_ID CHROM    POS REF ALT
+## 1 1_949523_C_T     1 949523   C   T
+## 2 1_949608_G_A     1 949608   G   A
+## 3 1_949739_G_T     1 949739   G   T
+## 4 1_955563_G_C     1 955563   G   C
+## 5 1_955596_C_G     1 955596   C   G</code></pre>
+<p>Then, we merge clinvar with the genes of interest. We can also slice clinvar itself to collect only relevant entries.</p>
+<pre class="r"><code>#clinvar$CHROM %&gt;% paste0(str_pad(clinvar$POS, 10, side = 'left', pad = &quot;0&quot;)) %&gt;% as.numeric %&gt;% 
+#  between(start, stop) -&gt; filter_condition
+#clinvar &lt;- filter(clinvar, filter_condition)</code></pre>
 
 
 

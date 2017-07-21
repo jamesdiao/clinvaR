@@ -7,7 +7,7 @@ output:
 
 ```{r setup, include = F}
 knitr::opts_knit$set(root.dir = ".");
-knitr::opts_chunk$set(echo = T, eval = T, cache = T, warning = F, message = F)
+knitr::opts_chunk$set(echo = T, eval = T, cache = F, warning = F, message = F)
 ```
 
 This is a vignette intended to introduce new users to [clinvaR](https://github.com/jamesdiao/clinvaR). 
@@ -80,8 +80,8 @@ The last way is to search OMIM for related genes.
 Then, you can download variants of interest from 1000 Genomes
 
 ```{r}
-download_output <- download_1000g(genes = gene_panel)
-final_vcf <- import_file_1000g(genes = gene_panel)
+#download_output <- download_1000g(genes = gene_panel)
+#final_vcf <- import_file_1000g(genes = gene_panel)
 ```
 
 This must be merged with some version of ClinVar. This can be done either using the latest saved version (July 5, 2017), or by specifying a date from the list. 
@@ -113,18 +113,17 @@ get_dates <- function(date_list, range) {
   all_dates[keep] %>% as.character()
 }
 clinvar <- get_test_clinvar()
+clinvar[1:5,1:5]
 ```
 
 Then, we merge clinvar with the genes of interest. We can also slice clinvar itself to collect only
 relevant entries. 
 
 ```{r}
-sapply(gene_panel, gene, function(x) {
-  
-})
-clinvar$CHROM %>% paste0(str_pad(clinvar$POS, 10, side = 'left', pad = "0")) %>% as.numeric %>% 
-  between(start, stop) -> filter_condition
-clinvar <- filter(clinvar, filter_condition)
+
+#clinvar$CHROM %>% paste0(str_pad(clinvar$POS, 10, side = 'left', pad = "0")) %>% as.numeric %>% 
+#  between(start, stop) -> filter_condition
+#clinvar <- filter(clinvar, filter_condition)
 ```
 
 

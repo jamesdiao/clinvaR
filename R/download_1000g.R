@@ -38,13 +38,13 @@ download_1000g <- function(genes, download) {
                            )
       output <- read.table(text = paste(output, collapse = "\n"), header = F, stringsAsFactors = F, 
                           comment.char = "", quote = "", sep = "\t")
-      saveRDS(output, sprintf('%s%s_genotypes_vcf.rds', dir, gene))
+      saveRDS(output, sprintf('%s/%s_genotypes_vcf.rds', dir, gene))
       
       # Checks whether the file exists and has non-zero size
-      exists <- grepl(paste0(gene,"_genotypes_vcf.rds"), 
+      exists <- grepl(sprintf("%s/%s_genotypes_vcf.rds", dir, gene), 
                       system(sprintf("ls %s", dir), intern = T)
                       ) %>% any
-      file.stat <- unlist(sprintf("stat %s%s_genotypes_vcf.rds", dir, gene) %>% 
+      file.stat <- unlist(sprintf("stat %s/%s_genotypes_vcf.rds", dir, gene) %>% 
                       system(intern = T) %>% strsplit(" "))
       file.size <- file.stat[grep("Size",file.stat)+1] %>% as.integer
       success <- exists & file.size > 0
