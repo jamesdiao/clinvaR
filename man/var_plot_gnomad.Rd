@@ -12,4 +12,5 @@ returns an ancestry-stratified plot of allele frequencies
 }
 \examples{
 var_plot_gnomad(clinvar, ACMG.gnomad, pathogenic = T, frac = T)
+#@export
 }
