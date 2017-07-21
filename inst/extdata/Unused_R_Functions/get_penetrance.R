@@ -9,7 +9,7 @@
 #' @examples 
 #' pen_gnomad <- get_penetrance(ah_low = 0.01, ah_high = 1, dataset = "gnomAD", alleleFreq = freq_gnomad.calc.gene)
 #' pen_1000g <-  get_penetrance(ah_low = 0.01, ah_high = 1, dataset = "1000 Genomes", alleleFreq = freq_1000g.count.gene)
-#' @export
+#' #@export
 
 get_penetrance <- function(ah_low, ah_high, dataset, alleleFreq) {
   # Map of disease name to disease tags

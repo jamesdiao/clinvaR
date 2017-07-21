@@ -8,7 +8,7 @@
 #' (twice the number of observed individuals). This is hard coded using dataset FAQs for 
 #' the aggregateCount() and aggregateCalc() functions
 #' @examples freq_CI(freq = 0.05, n = 2*2504, cutoff = 0.95)
-#' @export
+#' #@export
 
 freq_CI <- function(freq, n, cutoff) {
   if (missing(cutoff)) 

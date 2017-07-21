@@ -7,6 +7,12 @@
 var_plot_1000g(pathogenic, frac)
 }
 \arguments{
+\item{genes}{character; genes of interest. Only necessary if vcf is missing.}
+
+\item{clinvar}{data.frame; clinvaR-processed VCF from clinvaR. Defaults to get_clinvar().}
+
+\item{vcf}{data.frame; clinvaR-processed VCF from 1000 Genomes. Defaults to importing from genes (if present).}
+
 \item{pathogenic}{logical; whether to limit frequency counts to pathogenic variants only.}
 
 \item{frac}{logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts.}

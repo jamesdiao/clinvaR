@@ -5,7 +5,7 @@
 #' 
 #' @usage scrape_ACMG()
 #' @keywords ACMG
-#' @export
+#' #@export
 
 scrape_ACMG <- function() {
   ACMG.page <- scrapeR::scrape(url ="https://www.ncbi.nlm.nih.gov/clinvar/docs/acmg/")[[1]]
