@@ -97,6 +97,8 @@ download_clinvar <- function(file) {
 #' @export
 
 get_date_list <- function(resolution) {
+  if (missing(resolution)) 
+    resolution <- "all"
   dir <- system.file("extdata", package = "clinvaR")
   clinvar_reports <- system(sprintf("ls %s/Archive_Tables", dir), intern = T)
   clinvar_reports <- clinvar_reports[grep(".tsv",clinvar_reports)]

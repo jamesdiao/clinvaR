@@ -16,6 +16,14 @@ knitr::opts_chunk$set(echo = T, eval = T, cache = F, warning = F, message = F)
 
 This is a vignette intended to introduce new users to `clinvaR` ([https://github.com/jamesdiao/clinvaR](https://github.com/jamesdiao/clinvaR)). 
 
+## Purpose
+For `clinvaR`, the first goal is to go from genes to a vcf of related variants, along with classifications from any version of ClinVar.  
+This involves 3 steps:  
+
+1. Select a list of genes that you are interested in. clinvaR makes it easy to download and import relevant variants from 1KG.  
+2. Select a version of ClinVar to assign pathogenicity labels with. All previous ClinVar VCFs are stored as binary files and can be retrieved with a "closest date" function.  
+3. Select an analysis method. This part is not ready yet.  
+
 ## Dependencies
 
 clinvaR has a number of file dependencies that are generally useful for these types of projects. I have attached them here. 
@@ -30,14 +38,6 @@ if (!("clinvaR" %in% installed))
   remotes::install_github('jamesdiao/clinvaR')
 require(clinvaR)
 ```
-
-## Purpose
-For `clinvaR`, the first goal is to go from genes to a vcf of related variants, along with classifications from any version of ClinVar.  
-This involves 3 steps:  
-
-1. Select a list of genes that you are interested in. clinvaR makes it easy to download and import relevant variants from 1KG.  
-2. Select a version of ClinVar to assign pathogenicity labels with. All previous ClinVar VCFs are stored as binary files and can be retrieved with a "closest date" function.  
-3. Select an analysis method. This part is not ready yet.  
 
 
 ## Select a List of Genes
@@ -129,22 +129,22 @@ Use `get_clinvar()` to collect from a certain date (if date is not present, the 
 
 ```{r}
 clinvar <- get_clinvar("2017-07-21")
-clinvar[1:5,] %>% select(-CLNDBN)
+clinvar[1:4,] #%>% select(-VAR_ID, -CLNDBN)
 ```
 
 
 ```{r}
 clinvar <- get_clinvar()
-clinvar[1:5,] %>% select(-CLNDBN)
+clinvar[1:4,] #%>% select(-VAR_ID, -CLNDBN)
 ```
 
 
 Then, we merge clinvar with the genes of interest. 
 
 ```{r, cache = T}
-merged_1000g <- merge_clinvar_1000g(clinvar = get_clinvar(Sys.Date()), 
-                    vcf = import_file_1000g(gene_panel))
-merged_1000g[1:5,1:5]
+#merged_1000g <- merge_clinvar_1000g(clinvar = get_clinvar(Sys.Date()), 
+#                    vcf = import_file_1000g(gene_panel))
+#merged_1000g[1:5,1:5]
 ```
 
 We can also slice clinvar itself to collect only relevant entries. 
@@ -154,8 +154,4 @@ We can also slice clinvar itself to collect only relevant entries.
 #clinvar <- filter(clinvar, filter_condition)
 ```
 
-Also a quote using `>`:
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-
-([via](https://twitter.com/hadleywickham/status/504368538874703872))

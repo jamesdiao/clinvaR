@@ -1,24 +1,29 @@
-#' Merge ClinVar with 1000 Genomes
+#' Annotate 1000 Genomes Variant VCF using ClinVar
 #'
 #' This function takes a merged ClinVar-sequencing dataset and 
 #' returns an ancestry-stratified plot of allele frequencies. 
 #' 
-#' @usage merge_clinvar_1000g(clinvar, vcf)
+#' @usage annotate_1000g(clinvar, vcf)
 #' @param clinvar data.frame; clinvaR-processed vcf containing ClinVar data. 
 #' Defaults to get_clinvar().  
 #' @param vcf data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
 #' Defaults to importing data from all downloads: vcf <- import_file_1000g(). 
 #' @examples 
-#' merge_clinvar_1000g()
-#' merge_clinvar_1000g(clinvar = get_clinvar(), vcf = import_file_1000g())
+#' annotate_1000g(genes = get_genes())
+#' annotate_1000g(clinvar = get_clinvar(), vcf = import_file_1000g())
 #' @export
 
-merge_clinvar_1000g <- function(clinvar, vcf) {
+annotate_1000g <- function(clinvar, vcf, genes) {
   if (missing(clinvar)) {
     clinvar <- get_clinvar()
   }
   if (missing(vcf)) {
-    vcf <- import_file_1000g()
+    if (missing(genes)) {
+      vcf <- import_file_1000g()
+    } else {
+      download_1000g(genes)
+      vcf <- import_file_1000g(genes)
+    }
   }
   inter <- intersect(clinvar$VAR_ID[clinvar$pathogenic_incl_conflicts], vcf$VAR_ID)
   clinvar_merged <- clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID)

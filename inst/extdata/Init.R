@@ -4,7 +4,7 @@ setwd('/Users/jamesdiao/Documents/Kohane_Lab')
 #create('clinvaR')
 setwd('clinvaR')
 document()
+build_vignettes()
 setwd('..')
 install('clinvaR')
 require(clinvaR)
-
