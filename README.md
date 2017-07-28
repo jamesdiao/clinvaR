@@ -1,5 +1,5 @@
 ## clinvaR
-R Package for for gene-level analysis of variants in the ClinVar database. 
+R Package: annotated gene-level VCFs and ancestry-informed analyses from ClinVar data. 
 
 #### Purpose
 The goal of `clinvaR` is to quickly generate a VCF of annotated variants relevant to a list of genes, and produce simple, ancestry-informed analyses. 
