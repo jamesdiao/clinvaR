@@ -4,6 +4,7 @@
 \alias{get_genes}
 \title{Imports List of Genes from File}
 \usage{
+get_genes()
 get_genes(file)
 }
 \arguments{
