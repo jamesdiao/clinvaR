@@ -86,6 +86,7 @@ download_clinvar <- function(file) {
   input$pathogenic_no_conflicts <- sapply(input$CLNSIG, function(x) any(x %in% c(4,5)) & !(any(x %in% c(2,3)))) 
   #input$INTERP <- input$pathogenic_no_conflicts
   #input$LMM <- grepl("Laboratory_for_Molecular_Medicine",input$INFO)
+  class(input) <- c("clinvar", class(input))
   return(input)
 }
 
@@ -145,9 +146,8 @@ get_closest_date <- function(dates) {
 get_clinvar <- function(date) {
   if (missing(date)) 
     date <- Sys.Date()
-  system.file("extdata", sprintf('RDS/clinvar_%s.rds', get_closest_date(date)), 
-              package = "clinvaR") %>% readRDS %>% return
+  input <- system.file("extdata", sprintf('RDS/clinvar_%s.rds', get_closest_date(date)), 
+              package = "clinvaR") %>% readRDS
+  class(input) <- c("clinvar", class(input))
+  return(input)
 }
-
-  
-  

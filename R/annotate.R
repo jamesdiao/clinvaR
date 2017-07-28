@@ -3,7 +3,9 @@
 #' This function takes a merged ClinVar-sequencing dataset and 
 #' returns an ancestry-stratified plot of allele frequencies. 
 #' 
-#' @usage annotate_1000g(clinvar, vcf)
+#' @usage annotate_1000g(vcf)
+#' annotate_1000g(genes)
+#' annotate_1000g(vcf, conflicts = FALSE)
 #' @param clinvar data.frame; clinvaR-processed vcf containing ClinVar data. 
 #' Defaults to get_clinvar().  
 #' @param vcf data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
@@ -13,7 +15,7 @@
 #' annotate_1000g(clinvar = get_clinvar(), vcf = import_file_1000g())
 #' @export
 
-annotate_1000g <- function(clinvar, vcf, genes) {
+annotate_1000g <- function(vcf, genes, clinvar, conflicts) {
   if (missing(clinvar)) {
     clinvar <- get_clinvar()
   }
@@ -25,72 +27,39 @@ annotate_1000g <- function(clinvar, vcf, genes) {
       vcf <- import_file_1000g(genes)
     }
   }
-  inter <- intersect(clinvar$VAR_ID[clinvar$pathogenic_incl_conflicts], vcf$VAR_ID)
+  if (missing(conflicts))
+    conflicts <- TRUE
+  if (conflicts) {
+    keep <- clinvar$pathogenic_incl_conflicts
+  } else {
+    keep <- clinvar$pathogenic_no_conflicts
+  }
+  inter <- intersect(clinvar$VAR_ID[keep], vcf$VAR_ID)
   clinvar_merged <- clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID)
   vcf_merged <- vcf[vcf$VAR_ID %in% inter,] %>% arrange(VAR_ID)
   front_cols <- 1:(grep("HG00096",colnames(vcf))-1)
   vcf_merged <- data.frame(vcf_merged[,c("GENE","AF_1000G")], 
         clinvar_merged,vcf_merged[,-front_cols])
+  class(vcf_merged) <- c("annotated_vcf", "plain_vcf", class(vcf_merged))
   return(vcf_merged)
 }
 
-#' Merge ClinVar with ExAC
+#' Compute and Plot Aggregate Allele Frequencies for 1000 Genomes
 #'
-#' This function takes a merged ClinVar-sequencing dataset and 
-#' returns an ancestry-stratified plot of allele frequencies
-#' @usage merge_clinvar_exac(clinvar, ACMG.exac)
-#' @param clinvar clinvaR-processed vcf containing ClinVar data. 
-#' Defaults to get_test_clinvar().  
-#' @param ACMG.exac clinvaR-processed vcf containing ExAC sequencing data. 
-#' Defaults to 'extdata/Supplementary_Files/ACMG_EXAC.rds'. 
-#' @examples merge_clinvar_exac()
-#' merge_clinvar_exac(clinvar, ACMG.exac)
-#' #@export
+#' This function takes an annotated ClinVar-sequencing dataset and 
+#' returns an ancestry-stratified plot of counts or frequencies.   
+#' @usage var_plot_1000g(vcf)
+#' var_plot_1000g(vcf, fraction = TRUE)
+#' @param vcf plain_vcf data.frame; clinvaR-processed VCF from 1000 Genomes. 
+#' @param fraction logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts. 
+#' @export
 
-merge_clinvar_exac <- function(clinvar, ACMG.exac) {
-  if (missing(clinvar)) {
-    clinvar <- get_clinvar()
+plot.annotated_vcf <- function(vcf, fraction) {
+  if (missing(fraction)) 
+    fraction <- TRUE
+  if (!is.logical(fraction)) {
+    print("Fraction must be logical: set as TRUE")
+    fraction <- TRUE
   }
-  if (missing(ACMG.exac)) {
-    system.file("extdata", "Supplementary_Files/ACMG_EXAC.rds", package = "clinvaR") %>% 
-      readRDS -> ACMG.exac
-  }
-  inter <- intersect(clinvar$VAR_ID[clinvar$INTERP], ACMG.exac$VAR_ID)
-  merged_exac <- cbind(clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID), 
-                       ACMG.exac %>% select(VAR_ID, contains("AF_"), GENE) %>% 
-                         filter(VAR_ID %in% inter) %>% arrange(VAR_ID) %>% select(-VAR_ID)
-  ) %>% select(VAR_ID, GENE, AF_EXAC, contains("AF_"), everything())
-  return(merged_exac)
+  var_plot_1000g(vcf, fraction)
 }
-
-
-
-#' Merge ClinVar with gnomAD
-#'
-#' This function takes a merged ClinVar-sequencing dataset and 
-#' returns an ancestry-stratified plot of allele frequencies
-#' @usage merge_clinvar_gnomad(clinvar, ACMG.gnomad)
-#' @param clinvar clinvaR-processed vcf containing ClinVar data. 
-#' Defaults to get_test_clinvar().  
-#' @param ACMG.gnomAD clinvaR-processed vcf containing gnomAD sequencing data. 
-#' Defaults to 'extdata/Supplementary_Files/ACMG_GNOMAD.rds'. 
-#' @examples merge_clinvar_gnomad()
-#' merge_clinvar_gnomad(clinvar, ACMG.gnomad)
-#' #@export
-
-merge_clinvar_gnomad <- function(clinvar, ACMG.gnomad) {
-  if (missing(clinvar)) {
-    clinvar <- get_clinvar()
-  }
-  if (missing(ACMG.gnomad)) {
-    system.file("extdata", "Supplementary_Files/ACMG_GNOMAD.rds", package = "clinvaR") %>% 
-      readRDS -> ACMG.gnomad
-  }
-  inter <- intersect(clinvar$VAR_ID[clinvar$INTERP], ACMG.gnomad$VAR_ID)
-  merged_gnomad <- cbind(clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID), 
-                         ACMG.gnomad %>% select(VAR_ID, contains("AF_"), GENE) %>% 
-                           filter(VAR_ID %in% inter) %>% arrange(VAR_ID) %>% select(-VAR_ID)
-  ) %>% select(VAR_ID, GENE, AF_GNOMAD, contains("AF_"), everything())
-  return(merged_gnomad)
-}
-

@@ -4,23 +4,15 @@
 \alias{var_plot_1000g}
 \title{Compute and Plot Aggregate Allele Frequencies for 1000 Genomes}
 \usage{
-var_plot_1000g(pathogenic, frac)
+var_plot_1000g(vcf)
+var_plot_1000g(vcf, fraction = FALSE)
 }
 \arguments{
-\item{genes}{character; genes of interest. Only necessary if vcf is missing.}
-
-\item{clinvar}{data.frame; clinvaR-processed VCF from clinvaR. Defaults to get_clinvar().}
-
 \item{vcf}{data.frame; clinvaR-processed VCF from 1000 Genomes. Defaults to importing from genes (if present).}
 
-\item{pathogenic}{logical; whether to limit frequency counts to pathogenic variants only.}
-
-\item{frac}{logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts.}
+\item{fraction}{logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts.}
 }
 \description{
 This function takes a merged ClinVar-sequencing dataset and 
 returns an ancestry-stratified plot of allele frequencies
-}
-\examples{
-var_plot_1000g(pathogenic = T, frac = T)
 }

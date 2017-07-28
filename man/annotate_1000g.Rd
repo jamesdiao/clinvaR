@@ -4,14 +4,16 @@
 \alias{annotate_1000g}
 \title{Annotate 1000 Genomes Variant VCF using ClinVar}
 \usage{
-annotate_1000g(clinvar, vcf)
+annotate_1000g(vcf)
+annotate_1000g(genes)
+annotate_1000g(vcf, conflicts = FALSE)
 }
 \arguments{
-\item{clinvar}{data.frame; clinvaR-processed vcf containing ClinVar data. 
-Defaults to get_clinvar().}
-
 \item{vcf}{data.frame; clinvaR-processed vcf containing 1000 genomes sequencing data. 
 Defaults to importing data from all downloads: vcf <- import_file_1000g().}
+
+\item{clinvar}{data.frame; clinvaR-processed vcf containing ClinVar data. 
+Defaults to get_clinvar().}
 }
 \description{
 This function takes a merged ClinVar-sequencing dataset and 

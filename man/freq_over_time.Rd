@@ -5,11 +5,8 @@
 \title{Population frequencies over time}
 \usage{
 freq_over_time(vcf)
-freq_over_time(genes)
 }
 \arguments{
-\item{genes}{character; genes of interest.}
-
 \item{vcf}{data.frame; clinvaR-processed vcf from import_file_1000g()}
 }
 \description{
@@ -17,6 +14,5 @@ This function computes the probability of having at least 1 variant
 in the gene list of interest (assuming independence) for a range of ClinVar files
 }
 \examples{
-freq_over_time(get_genes('lmm_hcm'))
 freq_over_time(import_file_1000g())
 }
