@@ -16,13 +16,12 @@ var_plot_1000g <- function(vcf, fraction) {
                   "GBR", "IBS", "TSI", "BEB", "GIH", "ITU", "PJL", "STU")
 
   front_cols <- 1:(grep("HG00096",colnames(vcf))-1)
-  #recessive <- vcf$GENE %in% c("MUTYH","ATP7B")
   sapply(pop.levels, function(pop) {
     keep <- c(front_cols,map$pop)==pop
     if(fraction) {
-      temp <- colSums(vcf[,keep]) > 0
+      temp <- colSums(vcf[,keep]) > 0 #average fraction with at least 1
     } else {
-      temp <- colSums(vcf[,keep] > 0)
+      temp <- colSums(vcf[,keep] > 0) #average number per person
     }
     return(c(mean(temp), sd(temp)))
   }) %>% t %>% as.data.frame() -> values #Number of non-reference sites across the different populations

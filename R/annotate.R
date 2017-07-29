@@ -35,7 +35,7 @@ annotate_1000g <- function(vcf, genes, clinvar, conflicts) {
     keep <- clinvar$pathogenic_no_conflicts
   }
   inter <- intersect(clinvar$VAR_ID[keep], vcf$VAR_ID)
-  clinvar_merged <- clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID)
+  clinvar_merged <- clinvar[(clinvar$VAR_ID %in% inter),] %>% arrange(VAR_ID) %>% select(-GENE)
   vcf_merged <- vcf[vcf$VAR_ID %in% inter,] %>% arrange(VAR_ID)
   front_cols <- 1:(grep("HG00096",colnames(vcf))-1)
   vcf_merged <- data.frame(vcf_merged[,c("GENE","AF_1000G")], 
