@@ -12,7 +12,7 @@
 
 <meta name="author" content="James Diao" />
 
-<meta name="date" content="2017-07-28" />
+<meta name="date" content="2017-07-29" />
 
 <title>clinvaR vignette</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">clinvaR vignette</h1>
 <h4 class="author"><em>James Diao</em></h4>
-<h4 class="date"><em>2017-07-28</em></h4>
+<h4 class="date"><em>2017-07-29</em></h4>
 
 
 
@@ -280,11 +280,11 @@ This involves 3 steps:</p>
 <p>Use <code>get_clinvar()</code> to collect from a certain date (if date is not present, the closest date is used).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clinvar &lt;-<span class="st"> </span><span class="kw">get_clinvar</span>(<span class="st">&quot;2017-07-21&quot;</span>)
 clinvar[<span class="dv">1</span>:<span class="dv">4</span>,] <span class="co">#%&gt;% select(-VAR_ID, -CLNDBN)</span></code></pre></div>
-<pre><code>##         VAR_ID CHROM    POS REF ALT          ID CLNSIG
-## 1 1_949523_C_T     1 949523   C   T rs786201005      5
-## 2 1_949608_G_A     1 949608   G   A      rs1921      2
-## 3 1_949739_G_T     1 949739   G   T rs672601312      5
-## 4 1_955563_G_C     1 955563   G   C rs539283387      3
+<pre><code>##         VAR_ID  GENE CHROM    POS REF ALT          ID CLNSIG
+## 1 1_949523_C_T ISG15     1 949523   C   T rs786201005      5
+## 2 1_949608_G_A ISG15     1 949608   G   A      rs1921      2
+## 3 1_949739_G_T ISG15     1 949739   G   T rs672601312      5
+## 4 1_955563_G_C  AGRN     1 955563   G   C rs539283387      3
 ##                                                 CLNDBN
 ## 1 Immunodeficiency_38_with_basal_ganglia_calcification
 ## 2                                        not_specified
@@ -297,11 +297,11 @@ clinvar[<span class="dv">1</span>:<span class="dv">4</span>,] <span class="co">#
 ## 4                     FALSE                   FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clinvar &lt;-<span class="st"> </span><span class="kw">get_clinvar</span>()
 clinvar[<span class="dv">1</span>:<span class="dv">4</span>,] <span class="co">#%&gt;% select(-VAR_ID, -CLNDBN)</span></code></pre></div>
-<pre><code>##         VAR_ID CHROM    POS REF ALT          ID CLNSIG
-## 1 1_949523_C_T     1 949523   C   T rs786201005      5
-## 2 1_949608_G_A     1 949608   G   A      rs1921      2
-## 3 1_949739_G_T     1 949739   G   T rs672601312      5
-## 4 1_955563_G_C     1 955563   G   C rs539283387      3
+<pre><code>##         VAR_ID  GENE CHROM    POS REF ALT          ID CLNSIG
+## 1 1_949523_C_T ISG15     1 949523   C   T rs786201005      5
+## 2 1_949608_G_A ISG15     1 949608   G   A      rs1921      2
+## 3 1_949739_G_T ISG15     1 949739   G   T rs672601312      5
+## 4 1_955563_G_C  AGRN     1 955563   G   C rs539283387      3
 ##                                                 CLNDBN
 ## 1 Immunodeficiency_38_with_basal_ganglia_calcification
 ## 2                                        not_specified

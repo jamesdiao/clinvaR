@@ -22,7 +22,7 @@ import_file_1000g <- function(genes) {
     contents <- system(sprintf('ls %s/1000G', dir), intern = T)
     contents <- contents[grepl('_genotypes_vcf.rds', contents)]
     if (length(contents)==0) {
-      print('Error: no genes detected in downloads folder')
+      print('Error: no genes detected in downloads folder', quote = F)
       return(NULL)
     } else {
       genes <- str_match(string = contents, pattern = '([^_]*)_genotypes_vcf.rds')[,2]
@@ -79,12 +79,14 @@ import_file_1000g <- function(genes) {
   for (gene in genes) {
     exists <- any(grepl(gene, system(sprintf('ls %s/1000G', dir), intern = T)))
     if (!exists) {
-      print(sprintf("Warning at %s: VCF file not found", which(gene==genes), length(genes), gene))
+      print(sprintf("Warning at %s: VCF file not found", 
+                    which(gene==genes), length(genes), gene), quote = F)
       exists <- download_1000g(gene)['downloaded',] %>% unlist
       print(ifelse(exists, "SUCCESS", "FAILURE"))
     } 
     if (exists) {
-      print(sprintf("Importing [%d/%d] %s", which(gene==genes), length(genes), gene))
+      print(sprintf("Importing [%d/%d] %s", 
+                    which(gene==genes), length(genes), gene), quote = F)
       combined <- rbind(combined, temp_function(gene))
     }
   }

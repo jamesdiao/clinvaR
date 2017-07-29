@@ -18,9 +18,10 @@ download_1000g <- function(genes, download) {
   download_output <- sapply(genes, function(gene) {
     success <- FALSE
     if (length(genes) > 1) {
-      print(sprintf("Downloading [%d/%d] %s", which(gene==genes), length(genes), gene))
+      print(sprintf("Downloading [%d/%d] %s", 
+                    which(gene==genes), length(genes), gene), quote = F)
     } else {
-      print(sprintf("Downloading %s", gene))
+      print(sprintf("Downloading %s", gene), quote = F)
     }
     if (gene %in% refGene$gene) { 
       UCSC <- refGene[refGene$gene == gene, -1]
