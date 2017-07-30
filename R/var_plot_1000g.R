@@ -23,7 +23,7 @@ var_plot_1000g <- function(vcf, fraction) {
     } else {
       temp <- colSums(vcf[,keep] > 0) #average number per person
     }
-    return(c(mean(temp), sd(temp)))
+    return(c(mean(temp), sd(temp)/length(temp)))
   }) %>% t %>% as.data.frame() -> values #Number of non-reference sites across the different populations
   #colnames(values) <- c("Mean","SD")
   #values$Population <- factor(pop.levels, levels = pop.levels)

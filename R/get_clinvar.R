@@ -151,3 +151,22 @@ get_clinvar <- function(date) {
   class(input) <- c("clinvar", class(input))
   return(input)
 }
+
+
+#' Download Newer Versions of ClinVar
+#'
+#' This function downloads, processes, and stores newer versions of ClinVar. 
+#' 
+#' @usage update_clinvar()
+#' #@export
+
+update_clinvar <- function() {
+  #main_url <- "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/"
+  #years <- getURL(paste0(main_url,"archive/"), dirlistonly = T) %>% strsplit("\n") %>% unlist 
+  #urls <- paste0(main_url, c("", paste0("archive/", years, "/")))
+  #output <- getURL(urls, dirlistonly = T) %>% strsplit("\n") %>% unlist %>% setNames(NULL)
+  #avail_dates <- regmatches(output, regexpr("clinvar_(20.{6})\\.vcf\\.gz$", output)) %>% 
+  #  str_extract("20.{6}") %>% as.Date(format = "%Y%m%d") %>% unique() %>% sort()
+  #to_get <- avail_dates[!(avail_dates %in% all_dates)]
+  return(NULL)
+}
