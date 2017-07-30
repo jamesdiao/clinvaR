@@ -13,7 +13,7 @@ Depends: R (>= 3.2.0),
   tidyr, 
   seqminer, 
   stringr,
-  curl
+  Rcurl
 License: NA
 Encoding: UTF-8
 LazyData: true

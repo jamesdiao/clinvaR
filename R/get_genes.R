@@ -16,7 +16,7 @@ get_genes <- function(file) {
     if (!grepl('.tsv', file, fixed = T))
       file <- paste0(file, '.tsv')
     file <- system.file(sprintf('extdata/MacArthur_Gene_Lists/lists/%s', file), 
-                        package = 'clinvaR') %>% tolower()
+                        package = 'clinvaR')
     if (nchar(file) > 0) {
       return(read.table(file) %>% unlist() %>% unique() %>% as.character())
     } else {
