@@ -105,12 +105,14 @@ import_file_1000g <- function(genes) {
 #' @param fraction logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts. 
 #' @export
 
-plot.plain_vcf <- function(vcf, fraction) {
+plot.plain_vcf <- function(vcf, fraction, sd) {
   if (missing(fraction)) 
     fraction <- FALSE
+  if (missing(sd))
+    sd <- TRUE
   if (!is.logical(fraction)) {
     print("Fraction must be logical: set as FALSE")
     fraction <- FALSE
   }
-  var_plot_1000g(vcf, fraction)
+  var_plot_1000g(vcf, fraction, sd)
 }

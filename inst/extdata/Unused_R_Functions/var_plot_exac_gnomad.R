@@ -56,9 +56,9 @@ var_plot_exac <- function(clinvar, ACMG.exac, pathogenic, fraction) {
 
 var_plot_gnomad <- function(clinvar, ACMG.gnomad, pathogenic, fraction) {
   dataset <- 'gnomAD'
-  super.levels <- c("AFR", "AMR", "EAS", "EUR", "SAS")
+  super.levels <- c("AFR","AMR","ASJ","EAS","EUR","FIN","OTH","SAS")
   if (missing(clinvar)) {
-    clinvar <- get_test_clinvar()
+    clinvar <- get_clinvar()
   }
   if (missing(ACMG.gnomad)) {
     system.file("extdata", "Supplementary_Files/ACMG_GNOMAD.rds", package = "clinvaR") %>% 
@@ -73,10 +73,10 @@ var_plot_gnomad <- function(clinvar, ACMG.gnomad, pathogenic, fraction) {
   } else {
     ACMG.data <- ACMG.gnomad
   }
-  recessive <- ACMG.data$GENE %in% c("MUTYH","ATP7B")
-  exac_prob <- ACMG.data[,sprintf("AF_%s_%s", toupper(dataset), super.levels)]
+  #recessive <- ACMG.data$GENE %in% c("MUTYH","ATP7B")
+  exac_prob <- ACMG.data[,sprintf("AF_%s_%s", dataset, super.levels)]
   exac_final <- 1-(1-exac_prob)^2
-  exac_final[recessive,] <- (exac_prob[recessive,])^2
+  #exac_final[recessive,] <- (exac_prob[recessive,])^2
   if (fraction) {
     exac_values <- data.frame(1-apply(1-exac_final, 2, prod, na.rm = T), super.levels)
   } else {
@@ -85,8 +85,7 @@ var_plot_gnomad <- function(clinvar, ACMG.gnomad, pathogenic, fraction) {
   colnames(exac_values) = c("values","Superpopulation")
   ggplot(exac_values, aes(x = Superpopulation, y=values, fill = Superpopulation)) + 
     geom_bar(stat = "identity") + theme_minimal() + 
-    ggtitle(sprintf("ACMG-59%s: %s in %s", 
-                    ifelse(pathogenic, " Pathogenic",""), ifelse(fraction,"Fraction","Mean"), dataset)) + 
+    ggtitle(sprintf("%s of Any Pathogenic Variants in %s", ifelse(fraction,"Fraction","Mean Number"), dataset)) + 
     xlab("Population") + ylab("Mean No. of Non-Reference Sites") + 
     ylim(0,1.1*max(exac_values$values))
 }

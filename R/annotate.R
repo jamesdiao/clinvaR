@@ -54,12 +54,14 @@ annotate_1000g <- function(vcf, genes, clinvar, conflicts) {
 #' @param fraction logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts. 
 #' @export
 
-plot.annotated_vcf <- function(vcf, fraction) {
+plot.annotated_vcf <- function(vcf, fraction, sd) {
   if (missing(fraction)) 
     fraction <- TRUE
+  if (missing(sd))
+    sd <- TRUE
   if (!is.logical(fraction)) {
     print("Fraction must be logical: set as TRUE")
     fraction <- TRUE
   }
-  var_plot_1000g(vcf, fraction)
+  var_plot_1000g(vcf, fraction, sd)
 }

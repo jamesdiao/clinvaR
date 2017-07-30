@@ -8,7 +8,7 @@
 #' @param fraction logical; if TRUE, plots fraction with a finding. If FALSE, plots total counts. 
 #' @export
 
-var_plot_1000g <- function(vcf, fraction) {
+var_plot_1000g <- function(vcf, fraction, sd) {
   map <- system.file("extdata", "Supplementary_Files/phase3map.txt", package = "clinvaR") %>% 
     read.table(stringsAsFactors = F, header = T) %>% as.data.frame
   pop.levels <- c("ACB", "ASW", "ESN", "GWD", "LWK", "MSL", "YRI", "CLM", "MXL", 
@@ -29,11 +29,13 @@ var_plot_1000g <- function(vcf, fraction) {
   #values$Population <- factor(pop.levels, levels = pop.levels)
   #values$Superpopulation <- factor(super[pop.levels], levels = super.levels)
   title <- sprintf("%s in 1000 Genomes", ifelse(fraction,"Fraction","Mean Number"))
-  prettyprint(values, title = title, sd = F, ylimit = NULL, 
+  prettyprint(values, title = title, sd = sd, ylimit = NULL, 
               xlabel = "Population", 
               ylabel = ifelse(fraction, "Fraction with at least 1 non-reference site", 
                               "Mean number of non-reference sites")
-  )
+  ) -> plot.pop
+  plot(plot.pop)
+  return(plot.pop)
 }
 
 
@@ -91,7 +93,7 @@ prettyprint <- function(values, sd, title, xlabel, ylabel, ylimit) {
     plot.pop <- plot.pop + ylim(ylimit[1],ylimit[2])
   else
     plot.pop <- plot.pop + ylim(0, 1.1*max(values$Mean + values$SD))
-  plot.pop
+  return(plot.pop)
 }
 
 
