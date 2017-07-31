@@ -34,7 +34,6 @@ var_plot_1000g <- function(vcf, fraction, sd) {
               ylabel = ifelse(fraction, "Fraction with at least 1 non-reference site", 
                               "Mean number of non-reference sites")
   ) -> plot.pop
-  plot(plot.pop)
   return(plot.pop)
 }
 

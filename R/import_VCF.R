@@ -114,5 +114,5 @@ plot.plain_vcf <- function(vcf, fraction, sd) {
     print("Fraction must be logical: set as FALSE")
     fraction <- FALSE
   }
-  var_plot_1000g(vcf, fraction, sd)
+  return(var_plot_1000g(vcf, fraction, sd))
 }

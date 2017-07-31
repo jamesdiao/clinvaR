@@ -63,5 +63,5 @@ plot.annotated_vcf <- function(vcf, fraction, sd) {
     print("Fraction must be logical: set as TRUE")
     fraction <- TRUE
   }
-  var_plot_1000g(vcf, fraction, sd)
+  return(var_plot_1000g(vcf, fraction, sd))
 }

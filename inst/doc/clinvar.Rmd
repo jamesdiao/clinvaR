@@ -11,7 +11,7 @@ vignette: >
 
 ```{r setup, include = F}
 knitr::opts_knit$set(root.dir = ".");
-knitr::opts_chunk$set(echo = T, eval = T, cache = F, warning = F, message = F)
+knitr::opts_chunk$set(echo = T, eval = T, cache = T, warning = F, message = F)
 ```
 
 This is a vignette intended to introduce new users to `clinvaR` ([https://github.com/jamesdiao/clinvaR](https://github.com/jamesdiao/clinvaR)). 
@@ -22,11 +22,11 @@ This involves 3 steps:
 
 1. Select a list of genes that you are interested in. clinvaR makes it easy to download and import relevant variants from 1KG.  
 2. Select a version of ClinVar to assign pathogenicity labels with. All previous ClinVar VCFs are stored as binary files and can be retrieved with a "closest date" function.  
-3. Select an analysis method. This part is not ready yet.  
+3. Select an analysis method. These include frequency and submission count over time, and aggregate frequency by ancestral group.  
 
 ## Dependencies
 
-clinvaR has a number of file dependencies that are generally useful for these types of projects. I have attached them here. 
+clinvaR has a number of file dependencies that are generally useful for these types of projects. I have attached them here. `remotes` and `devtools` are interchangeable. 
 ```{r, echo = F}
 pkg_list <- c("remotes","pander","ggplot2","tibble","tidyr","dplyr", "stringr")
 installed <- installed.packages()[,"Package"]
@@ -49,7 +49,7 @@ The easiest way is to directly save your genes of interest in gene_panel as a ch
 
 
 ```{r}
-gene_panel <- c("ACTC1", "ACTN2", "CSRP3", "GLA", "LAMP2", "MYBPC3", "MYH7", 
+hcm_panel <- c("ACTC1", "ACTN2", "CSRP3", "GLA", "LAMP2", "MYBPC3", "MYH7", 
 "MYL2", "MYL3", "MYOZ2", "NEXN", "PLN", "PRKAG2", "PTPN11", "RAF1", 
 "TNNC1", "TNNI3", "TNNT2", "TPM1", "TTR")
 ```
@@ -62,11 +62,8 @@ Another way is to save your gene list in a text file (1 gene per line) and impor
 ```{r}
 path <- system.file("extdata/MacArthur_Gene_Lists/lists/lmm_hcm.tsv", package = "clinvaR")
 print(path)
-```
-
-```{r}
-gene_panel <- get_genes(path)
-print(gene_panel)
+hcm_panel <- get_genes(path)
+print(hcm_panel)
 ```
 
 #### From clinvaR stored lists
@@ -94,32 +91,35 @@ The MacArthur Lab has assembled a compilation of gene lists ([https://github.com
 | Natural product targets| natural_product_targets.tsv | 37 | List of hand-curated targets of natural products |
 
 
-These are easily imported by directly referring to the file name. 
+These are easily imported using `get_genes()` by directly referring to the file name. Use the `get_genes()` command without arguments to list possibilities. 
 
 ```{r}
-gene_panel <- get_genes('lmm_hcm.tsv')
-print(gene_panel)
+get_genes()
+hcm_panel <- get_genes('lmm_hcm.tsv')
+print(hcm_panel)
 ```
 
-The last way is to search OMIM for related genes. 
-```{r}
+The last way is to search OMIM for related genes. This has not been added as a full feature yet. 
+
+```{r, echo = F, include = F}
 #omim_table <- read.table('clinvaR/storage/gene_lists/other_data/omim.full.tsv', 
 #                         sep = '\t', fill = T, header = T)
 #search_terms <- c("Cardiomyopathy")
 ```
 
-Then, you can download variants of interest from 1000 Genomes
+## Download and Import 1000 Genomes VCF
 
 ```{r}
-#download_output <- download_1000g(genes = gene_panel)
-#final_vcf <- import_file_1000g(genes = gene_panel)
+#hcm_download_log <- download_1000g(genes = hcm_panel)
+vcf <- import_file_1000g(genes = hcm_panel)
+vcf[1:3,1:8]
 ```
 
-
+Note that there are another 2504+ columns, including individual-level data (0 = homozygous reference, 1 = heterozygous, 2 = homozygous alternate). 
 
 ## Import ClinVar VCF
 
-This must be merged with some version of ClinVar. This can be done either using the latest saved version (July 5, 2017), or by specifying a date from the list. 
+This must be annotated with some version of ClinVar. This can be done either using the latest saved version (July 5, 2017), or by specifying a date from the list. 
 
 ```{r}
 get_date_list()
@@ -128,30 +128,52 @@ get_date_list()
 Use `get_clinvar()` to collect from a certain date (if date is not present, the closest date is used). 
 
 ```{r}
-clinvar <- get_clinvar("2017-07-21")
-clinvar[1:4,] #%>% select(-VAR_ID, -CLNDBN)
+newest_clinvar <- get_clinvar(Sys.Date())
+newest_clinvar[1:4,] #%>% select(-VAR_ID, -CLNDBN)
 ```
 
+## Annotate Gene-Variant VCF
 
-```{r}
-clinvar <- get_clinvar()
-clinvar[1:4,] #%>% select(-VAR_ID, -CLNDBN)
-```
-
-
-Then, we merge clinvar with the genes of interest. 
+The ClinVar VCF can be used to annotate the Gene-Variant VCF. Note that this removes all variants without pathogenic assertions. 
 
 ```{r, cache = T}
-#merged_1000g <- merge_clinvar_1000g(clinvar = get_clinvar(Sys.Date()), 
-#                    vcf = import_file_1000g(gene_panel))
-#merged_1000g[1:5,1:5]
+hcm_vcf <- annotate_1000g(vcf = vcf, clinvar = newest_clinvar, conflicts = TRUE)
+mybpc3_vcf[1:3,1:12]
 ```
 
-We can also slice clinvar itself to collect only relevant entries. 
-```{r}
-#clinvar$CHROM %>% paste0(str_pad(clinvar$POS, 10, side = 'left', pad = "0")) %>% as.numeric %>% 
-#  between(start, stop) -> filter_condition
-#clinvar <- filter(clinvar, filter_condition)
+If we wanted to do this in fewer lines of code (with all the defaults used above), we could have done this more quickly by simply specifying the genes in annotate. We can also specify whether we want to exclude the (likely) pathogenic variants with any (likely) benign conflicts as well. These are included by default. 
+
+## Simple Analyses
+
+### Plot variant frequency by ancestry
+
+You can use the plot function (plot.annotated_vcf) to look at the frequency of these variants across ancestral groups. 
+
+1. Fraction = TRUE returns the fraction of the population with at least 1 of the genes.  
+2. Fraction = FALSE returns the average number of variants per person.  
+```{r, fig.width = 6.5, fig.height = 4.5}
+plot(hcm_vcf, fraction = TRUE)
+plot(hcm_vcf, fraction = FALSE)
 ```
 
+Similar plots can be generated for the un-annotated VCF using a slightly different plot function (plot.plain_vcf). 
+```{r, fig.width = 6.5, fig.height = 4.5}
+plot(vcf, fraction = FALSE)
+```
 
+### Plot Frequency Over Time: freq_over_time(vcf)
+
+`freq_over_time()` works primarily for annotated vcfs. It generates a plot of aggregated allele frequency over time. 
+```{r, fig.width = 6.5, fig.height = 4.5}
+freq_over_time(hcm_vcf, verbose = FALSE) -> freq
+freq
+```
+
+### Plot Number of Submissions Over Time for a Gene List: submissions_over_time(genes)
+
+`submissions_over_time()` plots the number of submissions related to any genes in the `genes` parameter over time. 
+
+```{r, fig.width = 6.5, fig.height = 4.5}
+submissions_over_time(genes = hcm_panel, verbose = FALSE) -> submits
+submits
+```

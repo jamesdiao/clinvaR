@@ -3,6 +3,7 @@
 .Rhistory
 .Rapp.history
 MGL
+inst/extdata/1000G/*.rds
 
 # Session Data files
 .RData

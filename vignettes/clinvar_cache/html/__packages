@@ -1,0 +1,15 @@
+base
+ggplot2
+dplyr
+tidyr
+seqminer
+stringr
+devtools
+roxygen2
+bitops
+RCurl
+remotes
+pander
+tibble
+bindrcpp
+clinvaR

@@ -1,6 +1,6 @@
 ## ----setup, include = F--------------------------------------------------
 knitr::opts_knit$set(root.dir = ".");
-knitr::opts_chunk$set(echo = T, eval = T, cache = F, warning = F, message = F)
+knitr::opts_chunk$set(echo = T, eval = T, cache = T, warning = F, message = F)
 
 ## ---- echo = F-----------------------------------------------------------
 pkg_list <- c("remotes","pander","ggplot2","tibble","tidyr","dplyr", "stringr")
@@ -14,49 +14,54 @@ if (!("clinvaR" %in% installed))
 require(clinvaR)
 
 ## ------------------------------------------------------------------------
-gene_panel <- c("ACTC1", "ACTN2", "CSRP3", "GLA", "LAMP2", "MYBPC3", "MYH7", 
+hcm_panel <- c("ACTC1", "ACTN2", "CSRP3", "GLA", "LAMP2", "MYBPC3", "MYH7", 
 "MYL2", "MYL3", "MYOZ2", "NEXN", "PLN", "PRKAG2", "PTPN11", "RAF1", 
 "TNNC1", "TNNI3", "TNNT2", "TPM1", "TTR")
 
 ## ------------------------------------------------------------------------
 path <- system.file("extdata/MacArthur_Gene_Lists/lists/lmm_hcm.tsv", package = "clinvaR")
 print(path)
+hcm_panel <- get_genes(path)
+print(hcm_panel)
 
 ## ------------------------------------------------------------------------
-gene_panel <- get_genes(path)
-print(gene_panel)
+get_genes()
+hcm_panel <- get_genes('lmm_hcm.tsv')
+print(hcm_panel)
 
-## ------------------------------------------------------------------------
-gene_panel <- get_genes('lmm_hcm.tsv')
-print(gene_panel)
-
-## ------------------------------------------------------------------------
+## ---- echo = F, include = F----------------------------------------------
 #omim_table <- read.table('clinvaR/storage/gene_lists/other_data/omim.full.tsv', 
 #                         sep = '\t', fill = T, header = T)
 #search_terms <- c("Cardiomyopathy")
 
 ## ------------------------------------------------------------------------
-#download_output <- download_1000g(genes = gene_panel)
-#final_vcf <- import_file_1000g(genes = gene_panel)
+#hcm_download_log <- download_1000g(genes = hcm_panel)
+vcf <- import_file_1000g(genes = hcm_panel)
+vcf[1:3,1:8]
 
 ## ------------------------------------------------------------------------
 get_date_list()
 
 ## ------------------------------------------------------------------------
-clinvar <- get_clinvar("2017-07-21")
-clinvar[1:4,] #%>% select(-VAR_ID, -CLNDBN)
-
-## ------------------------------------------------------------------------
-clinvar <- get_clinvar()
-clinvar[1:4,] #%>% select(-VAR_ID, -CLNDBN)
+newest_clinvar <- get_clinvar(Sys.Date())
+newest_clinvar[1:4,] #%>% select(-VAR_ID, -CLNDBN)
 
 ## ---- cache = T----------------------------------------------------------
-#merged_1000g <- merge_clinvar_1000g(clinvar = get_clinvar(Sys.Date()), 
-#                    vcf = import_file_1000g(gene_panel))
-#merged_1000g[1:5,1:5]
+hcm_vcf <- annotate_1000g(vcf = vcf, clinvar = newest_clinvar, conflicts = TRUE)
+mybpc3_vcf[1:3,1:12]
 
-## ------------------------------------------------------------------------
-#clinvar$CHROM %>% paste0(str_pad(clinvar$POS, 10, side = 'left', pad = "0")) %>% as.numeric %>% 
-#  between(start, stop) -> filter_condition
-#clinvar <- filter(clinvar, filter_condition)
+## ---- fig.width = 6.5, fig.height = 4.5----------------------------------
+plot(hcm_vcf, fraction = TRUE)
+plot(hcm_vcf, fraction = FALSE)
+
+## ---- fig.width = 6.5, fig.height = 4.5----------------------------------
+plot(vcf, fraction = FALSE)
+
+## ---- fig.width = 6.5, fig.height = 4.5----------------------------------
+freq_over_time(hcm_vcf, verbose = FALSE) -> freq
+freq
+
+## ---- fig.width = 6.5, fig.height = 4.5----------------------------------
+submissions_over_time(genes = hcm_panel, verbose = FALSE) -> submits
+submits
 
