@@ -16,6 +16,8 @@
 #' @export
 
 annotate_1000g <- function(vcf, genes, clinvar, conflicts) {
+  if (!missing(genes))
+    genes <- toupper(genes)
   if (missing(clinvar)) {
     clinvar <- get_clinvar()
   }

@@ -4,12 +4,14 @@ dplyr
 tidyr
 seqminer
 stringr
-devtools
-roxygen2
 bitops
 RCurl
+knitr
+bindrcpp
+plyr
+devtools
+roxygen2
 remotes
 pander
 tibble
-bindrcpp
 clinvaR

@@ -27,6 +27,8 @@ import_file_1000g <- function(genes) {
     } else {
       genes <- str_match(string = contents, pattern = '([^_]*)_genotypes_vcf.rds')[,2]
     }
+  } else {
+    genes <- toupper(genes)
   }
   
   temp_function <- function(gene) {
