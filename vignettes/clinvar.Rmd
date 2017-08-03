@@ -164,19 +164,19 @@ plot(vcf, fraction = FALSE)
 ### Plot ClinVar Time-Series: over_time(vcf)
 
 `over_time()` works for unannotated vcfs. It generates a plot of aggregated allele frequency over time. 
+
 ```{r, fig.width = 6.5, fig.height = 4.5}
-over_time(hcm_vcf, verbose = FALSE) -> output
-output$Frequencies %>% kable
+over_time(vcf, verbose = FALSE) -> output
+#output$Frequencies %>% kable
 plot(output$Frequencies)
-output$Submissions %>% kable
+#output$Submissions %>% kable
 plot(output$Submissions)
 ```
 
 To add penetrance computations, specify the prevalence and case frequency. 
 ```{r, fig.width = 6.5, fig.height = 4.5}
-over_time(hcm_vcf, prevalence = 0.002, case_freq = 0.4, verbose = FALSE) -> output
-output$Frequencies %>% kable
-plot(output$Frequencies)
-output$Submissions %>% kable
-plot(output$Submissions)
+over_time(vcf, prevalence = 0.002, case_freq = 0.4, verbose = FALSE) -> output
+#output$Frequencies %>% kable
+plot(output$Penetrance)
+#output$Submissions %>% kable
 ```

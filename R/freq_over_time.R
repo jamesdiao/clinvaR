@@ -15,6 +15,8 @@
 #' @export
 
 over_time <- function(vcf, dates, verbose, plot.it, prevalence, case_freq) {
+  map <- system.file("extdata/Supplementary_Files/phase3map.txt", package = "clinvaR") %>% 
+    read.table(stringsAsFactors = F, header = T) %>% as.data.frame
   if (missing(vcf)) 
     stop('Error: over_time() requires an unannotated VCF input')
   if (!("plain_vcf" %in% class(vcf)) | ("annotated_vcf" %in% class(vcf)))
@@ -40,8 +42,8 @@ over_time <- function(vcf, dates, verbose, plot.it, prevalence, case_freq) {
     assertions <- sapply(use_clinvar$CLNSIG, length) %>% 
       aggregate(by = list(GENE = use_clinvar$GENE), sum) %>% 
       filter(GENE %in% genes) %>% select(x) %>% sum
-    input <- annotate_1000g(clinvar = use_clinvar, vcf = vcf) %>% 
-      select(grep("(HG)|(NA)", colnames(merged_vcf))) %>% colSums 
+    merged_vcf <- annotate_1000g(clinvar = use_clinvar, vcf = vcf) 
+    input <- merged_vcf %>% select(grep("(HG)|(NA)", colnames(merged_vcf))) %>% colSums 
     input <- rbind(aggregate(input, by = list(population = map$super_pop), FUN = mean),
                    c("TOTAL", mean(input)))
     freqs <- input$x %>% as.numeric %>% setNames(input$population)
