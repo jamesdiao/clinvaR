@@ -15,9 +15,11 @@
 #' ACMG.1000g <- ACMG.1000g[!duplicated(ACMG.1000g$VAR_ID),]
 #' @export
 
-import_file_1000g <- function(genes) {
+import_file_1000g <- function(genes, verbose) {
   dir <- system.file("extdata", package = "clinvaR")
   
+  if (missing("verbose")) 
+    verbose <- TRUE
   if (missing("genes")) {
     contents <- system(sprintf('ls %s/1000G', dir), intern = T)
     contents <- contents[grepl('_genotypes_vcf.rds', contents)]
@@ -78,6 +80,7 @@ import_file_1000g <- function(genes) {
   map <- read.table(file = sprintf("%s/Supplementary_Files/phase3map.txt", dir), stringsAsFactors = F, header = T) %>% as.data.frame
   header <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", as.character(map$sample))
   combined <- NULL
+  ptm <- proc.time()
   for (gene in genes) {
     exists <- any(grepl(gene, system(sprintf('ls %s/1000G', dir), intern = T)))
     if (!exists) {
@@ -87,8 +90,12 @@ import_file_1000g <- function(genes) {
       print(ifelse(exists, "SUCCESS", "FAILURE"))
     } 
     if (exists) {
-      print(sprintf("Importing [%d/%d] %s", 
-                    which(gene==genes), length(genes), gene), quote = F)
+      if (verbose) {
+        elapsed <- h_read((proc.time() - ptm)['elapsed'])
+        print(sprintf("Importing [%d/%d] %s, Time Elapsed: %s", 
+                      which(gene==genes), length(genes), gene, elapsed), 
+              quote = F)
+      }
       combined <- rbind(combined, temp_function(gene))
     }
   }

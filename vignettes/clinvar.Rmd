@@ -151,13 +151,13 @@ You can use the plot function (plot.annotated_vcf) to look at the frequency of t
 
 1. Fraction = TRUE returns the fraction of the population with at least 1 of the genes.  
 2. Fraction = FALSE returns the average number of variants per person.  
-```{r, fig.width = 6.5, fig.height = 4.5}
+```{r, fig.width = 7, fig.height = 4.5}
 plot(hcm_vcf, fraction = TRUE)
 plot(hcm_vcf, fraction = FALSE)
 ```
 
 Similar plots can be generated for the un-annotated VCF using a slightly different plot function (plot.plain_vcf). 
-```{r, fig.width = 6.5, fig.height = 4.5}
+```{r, fig.width = 7, fig.height = 4.5}
 plot(vcf, fraction = FALSE)
 ```
 
@@ -165,18 +165,17 @@ plot(vcf, fraction = FALSE)
 
 `over_time()` works for unannotated vcfs. It generates a plot of aggregated allele frequency over time. 
 
-```{r, fig.width = 6.5, fig.height = 4.5}
+```{r, fig.width = 7, fig.height = 4.5}
 over_time(vcf, verbose = FALSE) -> output
-#output$Frequencies %>% kable
 plot(output$Frequencies)
-#output$Submissions %>% kable
 plot(output$Submissions)
+plot(output$Significances)
+#output$Frequencies %>% kable
+#output$Submissions %>% kable
 ```
 
 To add penetrance computations, specify the prevalence and case frequency. 
-```{r, fig.width = 6.5, fig.height = 4.5}
+```{r, fig.width = 7, fig.height = 4.5}
 over_time(vcf, prevalence = 0.002, case_freq = 0.4, verbose = FALSE) -> output
-#output$Frequencies %>% kable
 plot(output$Penetrance)
-#output$Submissions %>% kable
 ```

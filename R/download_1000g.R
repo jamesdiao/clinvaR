@@ -11,18 +11,26 @@
 #' download_output <- sapply(ACMG.panel, function(gene) download_1000g(gene, download = T)) %>% t
 #' @export
 
-download_1000g <- function(genes, download) {
-  if (missing(download)) { download <- TRUE }
+download_1000g <- function(genes, download, verbose) {
+  if (missing(verbose)) 
+    verbose <- TRUE
+  if (missing(download)) 
+    download <- TRUE 
   dir <- system.file("extdata", "1000G", package = "clinvaR")
   refGene <- readRDS(sprintf('%s/refGene.rds', dir))
+  ptm <- proc.time()
   download_output <- sapply(genes, function(gene) {
     success <- FALSE
-    if (length(genes) > 1) {
-      print(sprintf("Downloading [%d/%d] %s", 
-                    which(gene==genes), length(genes), gene), quote = F)
+    elapsed <- h_read((proc.time() - ptm)['elapsed'])
+    if (length(genes) > 1 & verbose) {
+      print(sprintf("Downloading [%d/%d] %s, Time Elapsed: %s", 
+                    which(gene==genes), length(genes), gene, elapsed), 
+            quote = F)
     } else {
-      print(sprintf("Downloading %s", gene), quote = F)
+      print(sprintf("Downloading %s, Time Elapsed: %s", gene, elapsed), 
+            quote = F)
     }
+    
     if (gene %in% refGene$gene) { 
       UCSC <- refGene[refGene$gene == gene, -1]
     } else {

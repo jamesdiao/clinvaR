@@ -3,6 +3,7 @@
 S3method(plot,annotated_vcf)
 S3method(plot,freq_dates)
 S3method(plot,plain_vcf)
+S3method(plot,significance_dates)
 S3method(plot,submission_dates)
 export(annotate_1000g)
 export(delete_downloads)
