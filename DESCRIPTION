@@ -1,7 +1,7 @@
 Package: clinvaR
 Title: collection, analysis, and visualization tools for ClinVar data
-Version: 1.4.1
-Date: 2017-08-02
+Version: 1.4.2
+Date: 2017-08-03
 Authors@R: c(
   person("James", "Diao", email = "diao.james@gmail.com", role = c("aut", "cre")),
   person("Arjun", "Manrai", email = "manrai@post.harvard.edu", role = c("ths"))

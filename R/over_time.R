@@ -14,7 +14,7 @@
 #' over_time(import_file_1000g())
 #' @export
 
-over_time <- function(vcf, dates, verbose, plot.it, prevalence, case_freq) {
+over_time <- function(vcf, dates, verbose, plot.it, prevalence, case_freq, conflicts) {
   map <- system.file("extdata/Supplementary_Files/phase3map.txt", package = "clinvaR") %>% 
     read.table(stringsAsFactors = F, header = T) %>% as.data.frame()
   sig_map <- c("Uncertain","Not Provided","Benign","Likely Benign","Likely Pathogenic","Pathogenic","Drug Response","Histocompatibility","Other") %>% 
@@ -29,6 +29,8 @@ over_time <- function(vcf, dates, verbose, plot.it, prevalence, case_freq) {
     verbose <- TRUE
   if (missing(plot.it))
     plot.it <- TRUE
+  if (missing(conflicts))
+    conflicts <- TRUE
   genes <- vcf$GENE %>% unique
   ptm <- proc.time()
   output <- lapply(as.character(dates), function(dat) {
@@ -47,14 +49,14 @@ over_time <- function(vcf, dates, verbose, plot.it, prevalence, case_freq) {
     significances <- use_clinvar$CLNSIG %>% unlist %>% 
       factor(levels = c(0, 1, 2, 3, 4, 5, 6, 7, 255)) %>% table
     names(significances) <- sig_map[as.character(names(significances))]
-    merged_vcf <- annotate_1000g(clinvar = use_clinvar, vcf = vcf) 
+    merged_vcf <- annotate_1000g(clinvar = use_clinvar, vcf = vcf, conflicts = conflicts) 
     input <- merged_vcf %>% select(grep("(HG)|(NA)", colnames(merged_vcf))) %>% colSums 
     input <- rbind(aggregate(input, by = list(population = map$super_pop), FUN = mean),
                    c("TOTAL", mean(input)))
     freqs <- input$x %>% as.numeric %>% setNames(input$population)
+    #freqs <- 1-prod(1-merged_vcf$AF_1000G)^2 #%>% setNames(input$population)
     return(list(freqs, positions, assertions, significances) %>% 
              setNames(c('Freqs','Positions','Assertions','Significances')))
-    #return(1-prod(1-merged_vcf$AF_1000G)^2)
   }) %>% setNames(as.character(dates))
   freqs <- sapply(output, function(item) item[['Freqs']] ) %>% 
     t %>% data.frame(Date = dates)
